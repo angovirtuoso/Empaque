@@ -141,7 +141,7 @@
   </section>
   <div class="kpis">
     <section class="kpi actual"><div class="k-label">Producción acumulada</div><div class="k-val accent" id="produced">—</div><div class="k-foot">Piezas registradas del modelo</div></section>
-    <section class="kpi"><div class="k-label">Plan hasta esta hora</div><div class="k-val" id="planNow">—</div><div class="k-foot" id="planFoot">Piezas programadas al corte</div></section>
+    <section class="kpi"><div class="k-label">Plan hasta esta hora</div><div class="k-val" id="planNow">—</div><div class="k-foot" id="planFoot">Solo filas del modelo con hora definida</div></section>
     <section class="kpi adherence"><div class="k-label">Cumplimiento del plan</div><div class="k-val" id="adherence">—</div><div class="k-foot" id="adherenceFoot">Comparativo con plan acumulado</div></section>
     <section class="kpi speed"><div class="k-label">Ritmo real vs. estándar</div><div class="k-val" id="speed">—</div><div class="k-foot" id="standardFoot">Estándar: — pzas/h</div></section>
   </div>
@@ -157,7 +157,7 @@
       <div class="notes"><div class="side-title">Comentarios y observaciones</div><div class="note-body" id="notesContent"><div class="empty">Sin observaciones registradas.</div></div><div class="alert" id="alertBox">Revisando el cumplimiento...</div></div>
     </aside>
   </main>
-  <div class="bottom"><div><div class="bottom-title">Avance del programa</div><div class="bottom-nums"><strong id="progressNumber">— / —</strong> <span>piezas</span></div></div><div class="progress-bg"><div class="progress-fill" id="progressFill" style="width:0%"></div></div><div class="bottom-end"><strong id="progressPercent">—</strong><small>DEL PLAN TOTAL</small></div></div>
+  <div class="bottom"><div><div class="bottom-title">Avance del modelo</div><div class="bottom-nums"><strong id="progressNumber">— / —</strong> <span>piezas</span></div></div><div class="progress-bg"><div class="progress-fill" id="progressFill" style="width:0%"></div></div><div class="bottom-end"><strong id="progressPercent">—</strong><small>DEL PLAN DEL MODELO</small></div></div>
   <div class="footnote"><span id="sourceLabel">Fuente: PLAN EMPAQUE + MINXPALLET · Solo lectura</span><span id="refreshLabel">Actualización automática cada 5 min</span></div>
 </div>
 <script>
@@ -240,7 +240,7 @@
    const hours=new Map();for(const s of slots){if(!(s.plan>0||s.actual!==null))continue;const hour=s.time.slice(0,2)+':00';if(!hours.has(hour))hours.set(hour,{label:hour,plan:0,actual:0,elapsed:false,hasActual:false,missing:false});const g=hours.get(hour);g.plan+=s.plan||0;if(s.elapsed){g.elapsed=true;if(s.actual!==null){g.actual+=s.actual;g.hasActual=true}if(s.missing)g.missing=true}}return [...hours.values()].map(g=>({...g,actual:g.hasActual?g.actual:null}));
  }
  function renderChart(){const slots=aggregate(data?.slots||[]),highest=Math.max(1,...slots.flatMap(s=>[s.plan||0,s.actual||0]))*1.13;
-   $('chartInfo').textContent=`${slots.length} ${mode==='half'?'intervalos':'horas'}`;
+   $('chartInfo').textContent=`${slots.length} ${mode==='half'?'intervalos':'horas'} · mismo modelo`;
    $('chart').innerHTML=slots.map(s=>{const ratio=s.plan>0?(s.actual||0)/s.plan:1;const state=!s.elapsed?'future':s.missing?'missing':ratio<.8?'low':ratio<.95?'mid':'good';const ph=(s.plan||0)/highest*100,ah=(s.actual||0)/highest*100;
      return `<div class="slot ${state} ${s.time===data.latest?.time?'current':''}" title="${esc(s.label)}: Real ${s.actual==null?'sin captura':num(s.actual)} / Plan ${num(s.plan)}"><div class="bar-top">${s.missing?'!':s.actual===null?'':num(s.actual)}</div><div class="bars"><div class="bar real" style="height:${ah}%"></div><div class="bar plan" style="height:${ph}%"></div></div><div class="slot-time">${esc(s.label)}</div></div>`;
    }).join('')||'<div class="empty">No hay intervalos registrados.</div>';
@@ -261,13 +261,13 @@
    $('produced').textContent=num(data.produced);$('planNow').textContent=num(data.planToNow);$('adherence').textContent=pct(data.adherence);
    $('adherence').className='k-val '+(data.adherence==null?'':data.adherence>=.95?'accent':data.adherence>=.8?'warn':'bad');
    $('speed').innerHTML=`${data.actualPerHour==null?'—':Math.round(data.actualPerHour)}<small> pzas/h</small>`;$('standardFoot').textContent=`Estándar: ${data.standardPerHour==null?'no configurado':Math.round(data.standardPerHour)+' pzas/h'}`;
-   $('planFoot').textContent='Piezas programadas al corte';$('adherenceFoot').textContent=`Brecha: ${data.gap>0?'+':''}${num(data.gap)} piezas`;
+   $('planFoot').textContent=data.untimedPlanned>0?`Plan con hora · ${data.untimedPlanned} fila(s) sin hora en total`:'Plan del modelo con hora';$('adherenceFoot').textContent=`Brecha: ${data.gap>0?'+':''}${num(data.gap)} piezas`;
    $('gap').innerHTML=`<span class="${data.gap>=0?'accent':'bad'}">${data.gap>0?'+':''}${num(data.gap)}</span> <small>pzas</small>`;
    $('plannedRate').innerHTML=`${num(data.plannedPerHour)} <small>pzas/h</small>`;$('remaining').innerHTML=`${num(data.remaining)} <small>pzas</small>`;
    $('latestCount').innerHTML=`${num(data.latest?.actual)}<small> pzas</small>`;$('latestTime').textContent=data.latest?.time||'—';$('latestPlan').textContent=`Plan: ${num(data.latest?.plan)} pzas`;
    const lastPct=data.latest?.plan ? data.latest.actual/data.latest.plan : null;$('latestPct').textContent=pct(lastPct);$('latestFill').style.width=`${Math.min(100,Math.max(0,(lastPct||0)*100))}%`;
    const notes=data.comments||[];$('notesContent').innerHTML=notes.length?notes.map(n=>`<div class="note"><div class="note-time">${esc(n.time)}</div>${esc(n.text)}</div>`).join(''):'<div class="empty">Sin observaciones registradas en la columna W de PLAN EMPAQUE.</div>';
-   const a=$('alertBox');if(data.missingSlots>0){a.className='alert warn';a.textContent=`⚠ ${data.missingSlots} intervalo(s) vencido(s) sin captura. Validar registros antes de interpretar el cumplimiento.`}else if(data.adherence!=null&&data.adherence<.8){a.className='alert';a.textContent=`⚠ Desviación contra el plan: ${num(Math.abs(data.gap))} piezas por debajo de lo programado.`}else if(data.adherence!=null&&data.adherence>=.95){a.className='alert ok';a.textContent='✓ Producción dentro del objetivo de cumplimiento (≥95%).'}else{a.className='alert warn';a.textContent='Producción en seguimiento. Comparar contra el plan de cada intervalo.'}
+   const a=$('alertBox');if(data.missingSlots>0){a.className='alert warn';a.textContent=`⚠ ${data.missingSlots} intervalo(s) vencido(s) sin captura. Validar registros antes de interpretar el cumplimiento.`}else if(data.adherence!=null&&data.adherence<.8){a.className='alert';a.textContent=`⚠ Desviación contra el plan: ${num(Math.abs(data.gap))} piezas por debajo de lo programado.`}else if(data.adherence!=null&&data.adherence>=.95){a.className='alert ok';a.textContent='✓ Producción dentro del objetivo de cumplimiento (≥95%).'}else{a.className='alert warn';a.textContent='Producción en seguimiento. Comparar contra el plan de cada intervalo.'} if(data.untimedPlanned>0){a.textContent+=` · ${data.untimedPlanned} fila(s) de este modelo sin hora incluidas en su plan total.`}
    $('progressNumber').textContent=`${num(data.produced)} / ${num(data.planTotal)}`;$('progressPercent').textContent=pct(data.dayProgress);$('progressFill').style.width=`${Math.max(0,Math.min(100,(data.dayProgress||0)*100))}%`;
    renderChart();scheduleFit();
  }
@@ -335,11 +335,33 @@ function dateISO(value, parts) {
 function hhmm(v){const m=String(v??'').match(/^(\d{1,2}):(\d{2})/);return m?`${m[1].padStart(2,'0')}:${m[2]}`:null}
 function standardMap(rows){const out=new Map(); for(const r of rows.slice(1)){const sku=String(r[0]??'').trim().toUpperCase();if(!sku)continue;const pieces=numeric(r[1]),minutes=numeric(r[2]); if(pieces>0 && minutes>0)out.set(sku,{piecesPerPallet:pieces,minutesPerPallet:minutes,perHour:pieces*60/minutes})}return out}
 
-/** One model/order currently being packed on a line, with the original KPI definitions. */
-function buildProductionSnapshot(planRows, standardRows, now=new Date(), requestedLine=null){
+/**
+ * UN MODELO POR LÍNEA Y FECHA.
+ * G: cantidad programada por fila, incluidas filas SIN hora (J vacía).
+ * I: cantidad producida por fila, únicamente del MISMO modelo.
+ * J: hora; solo se requiere para situar la producción en la gráfica.
+ * No se mezcla el total de otros modelos ni se exige coincidencia de PO.
+ */
+function normalizeModel(value){return String(value??'').trim().replace(/\s+/g,' ').toUpperCase()}
+function productionRows(planRows, now){
+ const time=mxParts(now);
+ return (planRows||[]).slice(1).map((r,i)=>({
+   row:i+2,
+   line:canonicalLine(r[0]),
+   date:dateISO(r[3]||r[1],time),
+   model:String(r[5]??'').trim(),
+   modelKey:normalizeModel(r[5]),
+   plan:numeric(r[6]),
+   order:String(r[7]??'').trim(),
+   actual:numeric(r[8]),
+   time:hhmm(r[9]),
+   comment:String(r[22]??'').trim()
+ })).filter(x=>x.line&&x.date&&x.modelKey&&!['COMIDA','DESCANSO'].includes(x.modelKey));
+}
+function buildProductionSnapshot(planRows,standardRows,now=new Date(),requestedLine=null,parsedRows=null){
  const time=mxParts(now),today=`${time.year}-${String(time.month).padStart(2,'0')}-${String(time.day).padStart(2,'0')}`;
  const standards=standardMap(standardRows);
- const all=(planRows||[]).slice(1).map((r,i)=>({row:i+2,line:canonicalLine(r[0]),date:dateISO(r[3] || r[1],time),model:String(r[5]??'').trim(),plan:numeric(r[6]),order:String(r[7]??'').trim(),actual:numeric(r[8]),time:hhmm(r[9]),comment:String(r[22]??'').trim()})).filter(x=>x.line&&x.date&&x.model&&x.time);
+ const all=parsedRows??productionRows(planRows,now);
  if(!all.length)return {updatedAt:now.toISOString(),source:'Google Sheets',lines:[],error:'No hay filas de producción válidas en PLAN EMPAQUE.'};
  const lines=LINE_NAMES.filter(name=>all.some(r=>r.line===name));
  const line=lines.includes(requestedLine)?requestedLine:lines[0];
@@ -347,43 +369,58 @@ function buildProductionSnapshot(planRows, standardRows, now=new Date(), request
  const availableDates=[...new Set(rowsForLine.map(r=>r.date))].sort();
  const datesNotFuture=availableDates.filter(d=>d<=today);
  const date=datesNotFuture.at(-1)||availableDates[0];
- const rowsForDay=rowsForLine.filter(r=>r.date===date).sort((a,b)=>a.time.localeCompare(b.time)||a.row-b.row);
+ const rowsForDay=rowsForLine.filter(r=>r.date===date).sort((a,b)=>a.row-b.row);
  const todayMinutes=time.hour*60+time.minute;
- const eligible=rowsForDay.filter(r=> date<today || (date===today && Number(r.time.slice(0,2))*60+Number(r.time.slice(3))<=todayMinutes));
- const last=eligible.filter(x=>x.actual!==null).at(-1) || eligible.at(-1) || rowsForDay[0];
- const jobRows=rowsForDay.filter(x=>x.model===last.model && x.order===last.order);
- const slots=jobRows.map(s=>{const minutes=Number(s.time.slice(0,2))*60+Number(s.time.slice(3));return {...s,elapsed:date<today||(date===today&&minutes<=todayMinutes),missing:false};});
+ const isElapsed=r=>!r.time||date<today||(date===today&&(Number(r.time.slice(0,2))*60+Number(r.time.slice(3))<=todayMinutes));
+ // Se identifica el modelo actual por la última captura con hora. Las filas sin hora
+ // no pueden reemplazarlo, pues son programación futura del mismo u otro SKU.
+ const withTime=rowsForDay.filter(r=>r.time).sort((a,b)=>a.time.localeCompare(b.time)||a.row-b.row);
+ const eligible=withTime.filter(isElapsed);
+ const last=eligible.filter(r=>r.actual!==null).at(-1)
+   || rowsForDay.filter(r=>!r.time&&r.actual!==null).at(-1)
+   || eligible.at(-1)||rowsForDay[0];
+ if(!last)return {updatedAt:now.toISOString(),source:'Google Sheets',lines,date,error:'No hay modelos para la línea.'};
+ // El denominador del 100% agrupa TODAS las filas programadas de este modelo
+ // en esta línea y fecha, tengan o no hora de empaque; sin sumar otros modelos.
+ const jobRows=rowsForDay.filter(r=>r.modelKey===last.modelKey);
+ const timedRows=jobRows.filter(r=>r.time).sort((a,b)=>a.time.localeCompare(b.time)||a.row-b.row);
+ const slots=timedRows.map(s=>({...s,elapsed:isElapsed(s),missing:false}));
  for(const s of slots)s.missing=s.elapsed&&s.actual===null&&(s.plan??0)>0;
  const elapsed=slots.filter(s=>s.elapsed);
- const planTotal=slots.reduce((sum,s)=>sum+(s.plan||0),0);
- const planToNow=elapsed.reduce((sum,s)=>sum+(s.plan||0),0);
- const produced=elapsed.reduce((sum,s)=>sum+(s.actual||0),0);
- // No contar como tiempo productivo intervalos sin plan ni captura (ej. casillas vacías al final del día).
-	 const totalHours=elapsed.filter(s=>(s.plan??0)>0 || s.actual!==null).length*.5;
- const standard=standards.get(last.model.toUpperCase());
- const captured=slots.filter(s=>s.actual!==null && s.elapsed);
- const lastCapture=captured.at(-1)||null;
- const notes=slots.filter(s=>s.comment).map(s=>({time:s.time,text:s.comment,model:s.model})).slice(-4).reverse();
- return {source:'Google Sheets',updatedAt:now.toISOString(),lines,line,date,model:last.model,order:last.order,
+ const capturedRows=jobRows.filter(s=>s.actual!==null&&isElapsed(s));
+ const planTotal=jobRows.reduce((sum,s)=>sum+Math.max(0,s.plan??0),0);
+ const planToNow=elapsed.reduce((sum,s)=>sum+Math.max(0,s.plan??0),0);
+ const produced=capturedRows.reduce((sum,s)=>sum+(s.actual??0),0);
+ const timedProduced=elapsed.reduce((sum,s)=>sum+(s.actual??0),0);
+ const totalHours=elapsed.filter(s=>(s.plan??0)>0||s.actual!==null).length*.5;
+ const standard=standards.get(last.modelKey);
+ const lastCapture=elapsed.filter(s=>s.actual!==null).at(-1)||null;
+ const noTimeCapture=!lastCapture?capturedRows.filter(s=>!s.time).at(-1):null;
+ const latest=lastCapture||noTimeCapture;
+ const notes=jobRows.filter(s=>s.comment).map(s=>({time:s.time||'SIN HORA',text:s.comment,model:s.model})).slice(-4).reverse();
+ const orders=[...new Set(jobRows.map(x=>x.order).filter(Boolean))];
+ const untimedPlanned=jobRows.filter(s=>!s.time&&s.plan>0).length;
+ return {source:'Google Sheets',updatedAt:now.toISOString(),lines,line,date,model:last.model,order:orders.length>1?'VARIAS ÓRDENES':(orders[0]||''),
   planTotal,planToNow,produced,remaining:Math.max(0,planTotal-produced),gap:produced-planToNow,
   adherence:planToNow?produced/planToNow:null,dayProgress:planTotal?produced/planTotal:null,
-  actualPerHour:totalHours?produced/totalHours:null,standardPerHour:standard?.perHour??null,
+  actualPerHour:totalHours?timedProduced/totalHours:null,standardPerHour:standard?.perHour??null,
   plannedPerHour:slots.length?((slots.find(s=>s.plan>0)?.plan??0)*2):null,
   piecesPerPallet:standard?.piecesPerPallet??null,minutesPerPallet:standard?.minutesPerPallet??null,
-  missingSlots:slots.filter(s=>s.missing).length,comments:notes,
-  latest: lastCapture?{time:lastCapture.time,actual:lastCapture.actual,plan:lastCapture.plan}:null,
-  slots:slots.map(s=>({time:s.time,plan:s.plan||0,actual:s.actual,elapsed:s.elapsed,missing:s.missing,comment:s.comment}))};
+  missingSlots:slots.filter(s=>s.missing).length,untimedPlanned,comments:notes,
+  latest:latest?{time:latest.time||'SIN HORA',actual:latest.actual,plan:latest.plan}:null,
+  slots:slots.map(s=>({time:s.time,plan:Math.max(0,s.plan??0),actual:s.actual,elapsed:s.elapsed,missing:s.missing,comment:s.comment}))};
 }
 
-/** One Google Sheets request yields ALL TV views. Autoplay never calls this endpoint itself. */
+/** Autoplay consulta solo los snapshots activos; no hace peticiones adicionales. */
 function buildProductionDashboard(planRows,standardRows,now=new Date()){
  const p=mxParts(now),today=`${p.year}-${String(p.month).padStart(2,'0')}-${String(p.day).padStart(2,'0')}`;
  const minutesNow=p.hour*60+p.minute;
- const activeLines=LINE_NAMES.filter(line=>(planRows||[]).slice(1).some(r=>{
-   const clock=hhmm(r[9]);const slotMinutes=clock?Number(clock.slice(0,2))*60+Number(clock.slice(3)):Infinity;
-   return canonicalLine(r[0])===line && dateISO(r[3]||r[1],p)===today && numeric(r[8])!==null && slotMinutes<=minutesNow && String(r[5]??'').trim();
+ const all=productionRows(planRows,now);
+ const activeLines=LINE_NAMES.filter(line=>all.some(r=>{
+   const slotMinutes=r.time?Number(r.time.slice(0,2))*60+Number(r.time.slice(3)):null;
+   return r.line===line && r.date===today && r.actual!==null && (slotMinutes===null||slotMinutes<=minutesNow);
  }));
- const snapshots=Object.fromEntries(activeLines.map(line=>[line,buildProductionSnapshot(planRows,standardRows,now,line)]));
+ const snapshots=Object.fromEntries(activeLines.map(line=>[line,buildProductionSnapshot(planRows,standardRows,now,line,all)]));
  return {source:'Google Sheets',updatedAt:now.toISOString(),date:today,lines:LINE_NAMES,activeLines,snapshots};
 }
 
