@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080e1b">
-  <title>PRODIESA · Empaque | TV · 15s</title>
+  <title>PRODIESA · Control de Empaque | Líneas y modelos</title>
   <style>
     :root{color-scheme:dark;--bg:#080e1b;--panel:#101929;--panel2:#151f32;--stroke:#243149;--muted:#91a0bb;--text:#f2f6ff;--lime:#4de4ae;--blue:#67a9ff;--amber:#fdbf5c;--red:#fb7484}
     *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
@@ -110,6 +110,113 @@
     html.tv-autofit .footnote{padding:6px 4px 0}
     /* En estado sin capturas, el mensaje largo no rompe la cabecera. */
     html.tv-autofit .hero-line.empty-line{font-size:35px;line-height:1.15;white-space:normal;min-width:278px;width:278px;letter-spacing:-1.3px}
+
+    /* V3: total del turno + detalle del último modelo y lista de SKU. */
+    .scope-bar{margin-top:12px;display:flex;align-items:center;gap:11px;color:#e6f3ff;font-size:12px;letter-spacing:.8px}
+    .scope-dot{width:8px;height:8px;border-radius:50%;background:var(--lime)}
+    #modelCountSummary{color:#a4b4ca;letter-spacing:0;font-weight:550}
+    .scope-cut{margin-left:auto;border:1px solid #35516b;border-radius:20px;padding:6px 12px;color:#bdd6f0;white-space:nowrap;letter-spacing:0;font-size:11px;font-weight:700}
+    .chart-count{margin-left:auto;color:#8297b3}
+    .chart-pane{display:flex;flex-direction:column}
+    .sku-legend{display:flex;flex-wrap:wrap;align-items:center;gap:7px 14px;min-height:27px;margin-top:10px}
+    .sku-key{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#bdcde1;font-weight:750}
+    .sku-key i,.sku-indicator{display:inline-block;width:9px;height:9px;flex:0 0 9px;border-radius:3px}
+    .chart-muted{font-size:12px;color:#8ca1bb}
+    .slot-sku{color:#a7bfd7;font-size:10px;height:17px;line-height:15px;font-weight:750;text-align:center}
+    .slot .slot-time{height:25px}
+    .bar.realstack{display:flex;flex-direction:column-reverse;overflow:hidden;background:none}
+    .bar.realstack .bar-piece{width:100%;flex-shrink:0;min-height:0}
+    .bar.realstack:empty{height:0!important}
+    .side{gap:9px}
+    .current-card,.models-card,.observations-card{border-radius:14px;border:1px solid #2b3e57;background:#142238;padding:13px 15px}
+    .current-card{background:linear-gradient(125deg,#163d3b,#15273b 70%);border-color:#367c72}
+    .current-heading,.models-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .current-hour,#modelCounts{font-size:11px;color:#a5bdd4;font-weight:750}
+    .current-model{font-size:25px;letter-spacing:-.5px;font-weight:900;margin-top:5px;color:#edfff9}
+    .current-progress{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:3px 0 7px}
+    .current-progress strong{font-size:30px;letter-spacing:-1px;color:#71f5c9}
+    .current-progress span{font-size:15px;font-weight:800;color:#d9e6f6}
+    .current-card .progress-bg{height:9px;background:#2c5360}
+    .current-foot{font-size:11px;color:#a9c8d3;margin-top:6px}
+    .models-card{padding-bottom:9px}
+    .models-header{padding-bottom:6px;border-bottom:1px solid #304056}
+    .model-list{display:flex;flex-direction:column;gap:0}
+    .model-row{display:grid;grid-template-columns:9px minmax(0,1fr) 100px 52px;gap:8px;align-items:center;border-bottom:1px solid #283950;min-height:45px;padding:4px 2px}
+    .model-row:last-child{border-bottom:0}
+    .model-row.is-current{background:#24423955;border-radius:8px;padding-left:4px;padding-right:4px}
+    .sku-label{min-width:0;display:flex;flex-direction:column;gap:2px}
+    .sku-label strong{font-size:13px;letter-spacing:.2px;color:#ebf4ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sku-label span{font-size:8px;font-weight:800;color:#8ca5bb;white-space:nowrap}
+    .is-current .sku-label span{color:#54e3b3}
+    .sku-amount{display:flex;flex-direction:column;gap:4px;align-items:stretch;min-width:0;text-align:right}
+    .sku-amount strong{font-size:13px;color:#e6f5ff;white-space:nowrap}
+    .sku-amount small{font-size:11px;color:#90a6be;font-weight:600}
+    .sku-track{display:block;height:4px;background:#324257;border-radius:4px;overflow:hidden}
+    .sku-track i{display:block;height:100%;border-radius:4px}
+    .sku-pct{font-size:14px;color:#effaff;text-align:right;font-variant-numeric:tabular-nums}
+    .observations-card{padding:10px 14px}
+    .mini-notes{font-size:11px;color:#a9bfd2;max-height:44px;overflow:hidden;line-height:1.4;margin-top:5px}
+    .mini-notes strong{color:#72e7c0}
+    .alert-strip{font-size:10px;line-height:1.35;color:#9db2c9;margin-top:7px}
+    .alert-strip.warn{color:#ffd294}.alert-strip.ok{color:#9fbcce}
+    html.tv-autofit .scope-bar{margin-top:7px}
+    html.tv-autofit .kpis{margin-top:8px}
+    html.tv-autofit .main{grid-template-columns:minmax(0,1.92fr) minmax(395px,.86fr);margin-top:10px;gap:12px}
+    html.tv-autofit .chart{height:236px}
+    html.tv-autofit .bars{height:164px}
+    html.tv-autofit .slot-time{height:23px}
+    html.tv-autofit .below-chart{margin-top:auto;padding-top:11px}
+    html.tv-autofit .side{gap:8px}
+    html.tv-autofit .model-row{min-height:43px}
+    html.tv-autofit .current-card{padding:12px 14px}
+    html.tv-autofit .models-card{padding:11px 13px 8px}
+    html.tv-autofit .observations-card{padding:10px 13px}
+    html.tv-autofit .bottom{margin-top:9px}
+
+    /* V4 · Jerarquía de lectura en TV: primero la línea completa, después los SKU. */
+    html.tv-autofit .hero-line-first{display:grid;grid-template-columns:310px minmax(0,1fr) 340px;gap:25px;min-height:153px;padding:16px 23px;align-items:center}
+    html.tv-autofit .hero-identity{min-width:0;display:flex;justify-content:center;flex-direction:column}
+    html.tv-autofit .hero-line-first .hero-line{min-width:0;max-width:none;border:0;padding:0;margin:0;width:auto;font-size:74px;line-height:1;letter-spacing:-3px}
+    .hero-subline{font-size:14px;font-weight:750;letter-spacing:.25px;color:#a6bad1;margin-top:12px;min-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .hero-subline.single-model{font-size:21px;color:#d9fff1;font-weight:850}
+    html.tv-autofit .hero-summary{min-width:0;border-left:3px solid var(--lime);padding-left:23px;display:flex;flex-direction:column;justify-content:center}
+    .hero-total-values{display:flex;align-items:baseline;gap:10px;margin-top:9px;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .hero-total-values strong{font-size:53px;line-height:1.06;font-weight:920;letter-spacing:-2px}
+    .hero-total-values strong:first-child{color:var(--lime)}
+    .hero-slash{font-size:26px;color:#657b99}
+    .hero-total-values small{font-size:13px;color:#a5b9d1;letter-spacing:1px;font-weight:850}
+    .hero-brief{font-size:13px;color:#a5b9d1;margin-top:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .hero-overall{padding:5px 0 5px 22px;border-left:1px solid #3a526c;min-width:0}
+    .hero-overall-label{color:#a7bdd1;font-size:12px;font-weight:850;letter-spacing:1.2px}
+    .hero-percent{font-size:69px;font-weight:930;letter-spacing:-3px;line-height:1.12;color:#71f1be;font-variant-numeric:tabular-nums;margin:1px 0 9px}
+    .hero-overall .progress-bg{height:9px;background:#31465a}
+    .hero-overall-foot{font-size:13px;color:#abc0d6;margin-top:9px}
+    html.tv-autofit .hero-line-first .hero-line.empty-line{font-size:36px;white-space:normal;letter-spacing:-.9px}
+    html.tv-autofit .side{gap:11px}
+    html.tv-autofit .models-card{padding:15px 16px 11px;min-height:301px}
+    .models-caption{font-size:11px;color:#90aac1;margin:7px 0 4px}
+    .models-header .side-title{font-size:13px;color:#c7dcef}
+    html.tv-autofit .model-row{min-height:50px;grid-template-columns:10px minmax(0,1fr) 112px 56px;gap:11px}
+    .sku-label strong{font-size:15px}
+    .sku-label span{font-size:9px}
+    .sku-amount strong{font-size:14px}
+    .sku-amount small{font-size:12px}
+    .sku-pct{font-size:16px}
+    .model-pager{border-top:1px solid #304056;margin-top:4px;padding-top:7px;text-align:center;font-size:11px;color:#aac0d7;font-weight:700}
+    .model-pager[hidden]{display:none}
+    html.tv-autofit .observations-card{padding:14px 16px;min-height:112px}
+    .capture-line{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .capture-line strong{font-size:20px;color:#d8f9ed;font-variant-numeric:tabular-nums}
+    .capture-description{font-size:12px;color:#b0c4d9;margin-top:4px}
+    .observations-divider{height:1px;background:#34445d;margin:10px 0}
+    .mini-notes{margin-top:7px;max-height:47px}
+    .alert-strip{font-size:10px}
+    .models-card.single-sku .model-row{min-height:85px;grid-template-columns:12px minmax(0,1fr) 122px 60px}
+    .models-card.single-sku .sku-label strong{font-size:22px}
+    .models-card.single-sku .sku-pct{font-size:24px}
+    .models-card.single-sku .sku-amount strong{font-size:17px}
+    html.tv-autofit .main{margin-top:11px;grid-template-columns:minmax(0,1.75fr) minmax(440px,.9fr)}
+    html.tv-autofit .chart{height:236px}
   </style>
 </head>
 <body>
@@ -128,36 +235,56 @@
     <div class="line-toolbar-left"><span class="line-toolbar-title">LÍNEAS DE EMPAQUE</span><div class="line-buttons" id="lineButtons" role="group" aria-label="Líneas 1 a 4"></div></div>
     <div class="line-toolbar-right"><span class="active-summary" id="activeSummary">Buscando capturas...</span><button class="autoplay-btn" id="autoplayButton" type="button" aria-pressed="false" disabled title="Rotar líneas activas cada 15 segundos"><span class="auto-icon" id="autoplayIcon">▶</span><span><span id="autoplayLabel">Autoplay</span><small id="autoplayDetail">Cada 15 segundos</small></span></button></div>
   </nav>
-  <section class="hero" aria-label="Línea y modelo actualmente mostrados">
-    <div class="hero-content">
-      <div class="hero-line" id="lineLabel" aria-label="Línea seleccionada">LÍNEA —</div>
-      <div class="hero-model-block">
-        <div class="hero-meta"><span class="hero-bullet"></span><span>MODELO EN PRODUCCIÓN</span><span class="hero-date" id="shiftDate">—</span></div>
-        <div class="model" id="model">CARGANDO PRODUCCIÓN</div>
-        <div class="model-details">ORDEN: <strong id="order">—</strong> &nbsp; · &nbsp; PLAN DEL MODELO: <strong id="totalPlan">—</strong> piezas</div>
-      </div>
+  <section class="hero hero-line-first" aria-label="Resumen general del turno por línea">
+    <div class="hero-identity">
+      <div class="hero-line" id="lineLabel">LÍNEA —</div>
+      <div class="hero-subline" id="heroSubline">Esperando datos del turno</div>
     </div>
-    <div class="hero-side"><small>ÚLTIMA CAPTURA</small><strong id="lastCapture">--:--</strong><span id="captureText">Consultando Google Sheets...</span></div>
+    <div class="hero-summary">
+      <div class="hero-meta"><span class="hero-bullet"></span><span>PRODUCCIÓN DEL TURNO</span><span class="hero-date" id="shiftDate">—</span></div>
+      <div class="hero-total-values"><strong id="heroProduced">—</strong><span class="hero-slash">/</span><strong id="heroPlan">—</strong><small>PIEZAS</small></div>
+      <div class="hero-brief" id="heroBrief">Total de todos los modelos programados</div>
+    </div>
+    <div class="hero-overall">
+      <div class="hero-overall-label">AVANCE TOTAL DE LA LÍNEA</div>
+      <div class="hero-percent" id="heroPercent">—</div>
+      <div class="progress-bg"><div class="progress-fill" id="heroFill" style="width:0%"></div></div>
+      <div class="hero-overall-foot" id="heroFoot">Pendientes: — piezas</div>
+    </div>
   </section>
+  <div class="scope-bar"><span class="scope-dot"></span><strong>RESUMEN DEL TURNO · LÍNEA COMPLETA</strong><span id="modelCountSummary">Todos los modelos programados, sin mezclarlos en el detalle</span><span class="scope-cut" id="cutSummary">—</span></div>
   <div class="kpis">
-    <section class="kpi actual"><div class="k-label">Producción acumulada</div><div class="k-val accent" id="produced">—</div><div class="k-foot">Piezas registradas del modelo</div></section>
-    <section class="kpi"><div class="k-label">Plan hasta esta hora</div><div class="k-val" id="planNow">—</div><div class="k-foot" id="planFoot">Solo filas del modelo con hora definida</div></section>
-    <section class="kpi adherence"><div class="k-label">Cumplimiento del plan</div><div class="k-val" id="adherence">—</div><div class="k-foot" id="adherenceFoot">Comparativo con plan acumulado</div></section>
-    <section class="kpi speed"><div class="k-label">Ritmo real vs. estándar</div><div class="k-val" id="speed">—</div><div class="k-foot" id="standardFoot">Estándar: — pzas/h</div></section>
+    <section class="kpi actual"><div class="k-label">Producido en la línea</div><div class="k-val accent" id="produced">—</div><div class="k-foot">Todos los SKU del turno</div></section>
+    <section class="kpi"><div class="k-label">Programado en la línea</div><div class="k-val" id="linePlan">—</div><div class="k-foot">Incluye filas pendientes sin hora</div></section>
+    <section class="kpi adherence"><div class="k-label">Avance total de línea</div><div class="k-val" id="adherence">—</div><div class="k-foot" id="adherenceFoot">Real ÷ plan del turno</div></section>
+    <section class="kpi speed"><div class="k-label">Piezas por producir</div><div class="k-val" id="remaining">—</div><div class="k-foot" id="pendingFoot">Pendientes de todos los modelos</div></section>
   </div>
   <main class="main">
-    <section class="pane">
-      <div class="panel-head"><div><h2>Producción hora por hora</h2><p id="chartSubtitle">Piezas reales contra programa · se actualiza cada 5 minutos</p></div><div class="switch"><button class="active" data-mode="half">30 min</button><button data-mode="hour">Por hora</button></div></div>
-      <div class="legend"><span><i class="lr"></i> Real</span><span><i class="lp"></i> Programado</span><span style="margin-left:auto;color:#8095af" id="chartInfo">— intervalos</span></div>
-      <div class="chart" id="chart" role="img" aria-label="Barras de producción real contra planeada"></div>
-      <div class="below-chart"><div class="little"><div class="x">Brecha contra plan</div><div class="y" id="gap">—</div></div><div class="little"><div class="x">Plan por hora</div><div class="y" id="plannedRate">—</div></div><div class="little"><div class="x">Por producir</div><div class="y" id="remaining">—</div></div></div>
+    <section class="pane chart-pane">
+      <div class="panel-head"><div><h2>Producción de la línea · hora por hora</h2><p id="chartSubtitle">Total de la línea; cada color identifica el SKU producido</p></div><div class="switch"><button data-mode="record">Por registro</button><button class="active" data-mode="hour">Por hora</button></div></div>
+      <div class="legend"><span><i class="lp"></i> Planeado con hora</span><span><i class="lr"></i> Real por modelo</span><span class="chart-count" id="chartInfo">— intervalos</span></div>
+      <div class="chart" id="chart" role="img" aria-label="Producción por hora de todos los modelos de la línea"></div>
+      <div class="sku-legend" id="skuLegend"></div>
+      <div class="below-chart"><div class="little"><div class="x">Modelos programados</div><div class="y" id="modelCount">—</div></div><div class="little"><div class="x">Modelos con producción</div><div class="y" id="startedCount">—</div></div><div class="little"><div class="x">Cumplimiento al corte *</div><div class="y" id="cutCompliance">—</div></div></div>
     </section>
     <aside class="side">
-      <div class="highlight"><div class="side-title">Último intervalo registrado</div><div class="latest-row"><div class="latest-number" id="latestCount">—<small> pzas</small></div><div class="latest-time" id="latestTime">—</div></div><div class="progress-bg"><div class="progress-fill" id="latestFill" style="width:0%"></div></div><div class="latest-foot"><span id="latestPlan">Plan: — pzas</span><span id="latestPct">—</span></div></div>
-      <div class="notes"><div class="side-title">Comentarios y observaciones</div><div class="note-body" id="notesContent"><div class="empty">Sin observaciones registradas.</div></div><div class="alert" id="alertBox">Revisando el cumplimiento...</div></div>
+      <section class="models-card" aria-label="Avance individual por modelo">
+        <div class="models-header"><span class="side-title">DESGLOSE POR MODELO</span><span id="modelCounts">—</span></div>
+        <div class="models-caption">Cada SKU tiene su propio plan al 100%</div>
+        <div class="model-list" id="modelList"><div class="empty">Consultando modelos…</div></div>
+        <div class="model-pager" id="modelPager" hidden></div>
+      </section>
+      <section class="observations-card" aria-label="Última captura y comentarios">
+        <div class="capture-line"><span class="side-title">ÚLTIMA CAPTURA REGISTRADA</span><strong id="lastCapture">--:--</strong></div>
+        <div class="capture-description" id="captureText">Consultando Google Sheets...</div>
+        <div class="observations-divider"></div>
+        <span class="side-title">COMENTARIOS Y OBSERVACIONES</span>
+        <div class="mini-notes" id="notesContent">Sin observaciones registradas</div>
+        <div class="alert-strip" id="alertBox">—</div>
+      </section>
     </aside>
   </main>
-  <div class="bottom"><div><div class="bottom-title">Avance del modelo</div><div class="bottom-nums"><strong id="progressNumber">— / —</strong> <span>piezas</span></div></div><div class="progress-bg"><div class="progress-fill" id="progressFill" style="width:0%"></div></div><div class="bottom-end"><strong id="progressPercent">—</strong><small>DEL PLAN DEL MODELO</small></div></div>
+  <div class="bottom"><div><div class="bottom-title">AVANCE DEL TURNO · <span id="bottomLine">LÍNEA —</span></div><div class="bottom-nums"><strong id="progressNumber">— / —</strong> <span>piezas</span></div></div><div class="progress-bg"><div class="progress-fill" id="progressFill" style="width:0%"></div></div><div class="bottom-end"><strong id="progressPercent">—</strong><small>DEL PLAN DE LA LÍNEA</small></div></div>
   <div class="footnote"><span id="sourceLabel">Fuente: PLAN EMPAQUE + MINXPALLET · Solo lectura</span><span id="refreshLabel">Actualización automática cada 5 min</span></div>
 </div>
 <script>
@@ -197,7 +324,8 @@
  // ÚNICAS OPCIONES DE CONEXIÓN: spreadsheet ID y GIDs de las dos pestañas.
  const SHEET_ID='1q6hB1JpQ8V35Gv3qpsWVFzxuGZmXKseLoJRAnvIQcOI';
  const GIDS={plan:0,standards:1789978757};
- let dashboard=null,data=null,mode='half',busy=false,chosenLine='',lastRefresh=0,autoplay=false,autoplayTimer=null,connectionError='';
+ let dashboard=null,data=null,mode='hour',busy=false,chosenLine='',lastRefresh=0,autoplay=false,autoplayTimer=null,connectionError='';
+ const MODEL_PAGE_SIZE=5, modelPages=Object.create(null);
  const datestr=s=>{if(!s)return'—';const [y,m,d]=s.split('-').map(Number);return new Intl.DateTimeFormat('es-MX',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(y,m-1,d)))};
  function updateClock(){const now=new Date();$('clock').textContent=new Intl.DateTimeFormat('es-MX',{timeZone:zone,hour:'2-digit',minute:'2-digit',hour12:false}).format(now);$('todayLabel').textContent=new Intl.DateTimeFormat('es-MX',{timeZone:zone,weekday:'short',day:'numeric',month:'short'}).format(now)}
  function setConnection(kind,label){$('connection').classList.toggle('demo',kind!=='ok');$('connection').style.color=kind==='error'?'#fb7484':kind==='ok'?'#4de4ae':'#ffca70';$('connectionText').textContent=label}
@@ -220,6 +348,10 @@
  function chooseLine(line,fromManual=false){
    if(!activeLines().includes(line))return;
    if(fromManual&&autoplay)setAutoplay(false);
+   if(line!==chosenLine && dashboard.snapshots[line]?.models?.length>MODEL_PAGE_SIZE){
+     const totalPages=Math.ceil(dashboard.snapshots[line].models.length/MODEL_PAGE_SIZE);
+     modelPages[line]=((modelPages[line]??-1)+1)%totalPages;
+   }
    chosenLine=line;data=dashboard.snapshots[line];updateLineButtons();render();
  }
  function nextLine(){const actives=activeLines();if(!autoplay||actives.length<2)return;const index=actives.indexOf(chosenLine);chooseLine(actives[(index+1)%actives.length]);}
@@ -236,39 +368,90 @@
    data=chosenLine?dashboard.snapshots[chosenLine]:null;
    updateLineButtons();render();
  }
- function aggregate(slots){if(mode==='half')return slots.filter(s=>s.plan>0||s.actual!==null).map(s=>({...s,label:s.time}));
-   const hours=new Map();for(const s of slots){if(!(s.plan>0||s.actual!==null))continue;const hour=s.time.slice(0,2)+':00';if(!hours.has(hour))hours.set(hour,{label:hour,plan:0,actual:0,elapsed:false,hasActual:false,missing:false});const g=hours.get(hour);g.plan+=s.plan||0;if(s.elapsed){g.elapsed=true;if(s.actual!==null){g.actual+=s.actual;g.hasActual=true}if(s.missing)g.missing=true}}return [...hours.values()].map(g=>({...g,actual:g.hasActual?g.actual:null}));
+ // Los colores de la gráfica representan SKU; se conservan en las tarjetas de modelos.
+ const palette=['#4de4ae','#65adff','#ffc16a','#b99bff','#fa8ca8','#59d7da','#95e17b','#d5a3ed'];
+ const colorAt=i=>palette[i%palette.length];
+ const shortSku=sku=>/^\d{8,}$/.test(sku)?sku.slice(-4):sku.length>8?sku.slice(0,8):sku;
+ function aggregate(slots){
+   const groups=new Map();
+   for(const s of slots){
+     if(!s.time)continue;
+     const label=mode==='hour'?s.time.slice(0,2)+':00':s.time;
+     if(!groups.has(label))groups.set(label,{label,plan:0,actual:0,hasActual:false,elapsed:false,models:{},missing:false});
+     const g=groups.get(label);g.plan+=Math.max(0,s.plan||0);g.elapsed=g.elapsed||s.elapsed;
+     if(s.actual!==null && s.elapsed){g.actual+=s.actual;g.hasActual=true;g.models[s.modelKey]=(g.models[s.modelKey]||0)+s.actual}
+     g.missing=g.missing||s.missing;
+   }
+   return [...groups.values()].sort((a,b)=>a.label.localeCompare(b.label)).map(g=>({...g,actual:g.hasActual?g.actual:null}));
  }
- function renderChart(){const slots=aggregate(data?.slots||[]),highest=Math.max(1,...slots.flatMap(s=>[s.plan||0,s.actual||0]))*1.13;
-   $('chartInfo').textContent=`${slots.length} ${mode==='half'?'intervalos':'horas'} · mismo modelo`;
-   $('chart').innerHTML=slots.map(s=>{const ratio=s.plan>0?(s.actual||0)/s.plan:1;const state=!s.elapsed?'future':s.missing?'missing':ratio<.8?'low':ratio<.95?'mid':'good';const ph=(s.plan||0)/highest*100,ah=(s.actual||0)/highest*100;
-     return `<div class="slot ${state} ${s.time===data.latest?.time?'current':''}" title="${esc(s.label)}: Real ${s.actual==null?'sin captura':num(s.actual)} / Plan ${num(s.plan)}"><div class="bar-top">${s.missing?'!':s.actual===null?'':num(s.actual)}</div><div class="bars"><div class="bar real" style="height:${ah}%"></div><div class="bar plan" style="height:${ph}%"></div></div><div class="slot-time">${esc(s.label)}</div></div>`;
-   }).join('')||'<div class="empty">No hay intervalos registrados.</div>';
+ function renderChart(){
+   const slots=aggregate(data?.slots||[]),highest=Math.max(1,...slots.flatMap(s=>[s.plan||0,s.actual||0]))*1.12;
+   $('chartInfo').textContent=`${slots.length} ${mode==='hour'?'horas':'registros'} con horario`;
+   const models=data?.models||[];
+   $('skuLegend').innerHTML=models.filter(x=>x.produced>0).map(m=>`<span class="sku-key"><i style="background:${colorAt(m.colorIndex)}"></i>${esc(m.model)}</span>`).join('')||'<span class="chart-muted">Aún no se ha capturado producción</span>';
+   $('chart').innerHTML=slots.map(s=>{
+     const ph=(s.plan||0)/highest*100,ah=(s.actual||0)/highest*100;
+     const parts=Object.entries(s.models).filter(x=>x[1]>0);
+     const total=parts.reduce((n,x)=>n+x[1],0);
+     const pieces=parts.map(([sku,q])=>{const m=models.find(x=>x.modelKey===sku);return `<div class="bar-piece" style="background:${colorAt(m?.colorIndex??0)};height:${100*q/Math.max(1,total)}%" title="${esc(sku)} · ${num(q)} piezas"></div>`}).join('');
+     const tooltip=parts.map(([sku,q])=>`${sku}: ${q}`).join(' / ');
+     const small=parts.length===1?shortSku(parts[0][0]):parts.length>1?`${parts.length} SKU`:'';
+     return `<div class="slot ${!s.elapsed?'future':s.missing?'missing':''}" title="${esc(s.label)} · Real ${num(s.actual)} · Plan horario ${num(s.plan)} · ${esc(tooltip)}"><div class="bar-top">${s.actual===null?'':num(s.actual)}</div><div class="bars"><div class="bar realstack" style="height:${ah}%">${pieces}</div><div class="bar plan" style="height:${ph}%"></div></div><div class="slot-time">${esc(s.label)}</div><div class="slot-sku">${esc(small)}</div></div>`;
+   }).join('')||'<div class="empty">No existen registros con hora para esta línea.</div>';
+ }
+ function renderModels(){
+   if(!data)return;
+   const all=data.models||[], pages=Math.max(1,Math.ceil(all.length/MODEL_PAGE_SIZE));
+   const page=(modelPages[data.line]||0)%pages;
+   const visible=all.slice(page*MODEL_PAGE_SIZE,(page+1)*MODEL_PAGE_SIZE);
+   $('modelCounts').textContent=`${all.length} SKU · ${data.startedCount} con producción`;
+   $('modelList').innerHTML=visible.map(m=>`<div class="model-row ${m.modelKey===data.currentModel?.modelKey?'is-current':''}"><span class="sku-indicator" style="background:${colorAt(m.colorIndex)}"></span><div class="sku-label"><strong>${esc(m.model)}</strong><span>${m.modelKey===data.currentModel?.modelKey?'ÚLTIMA CAPTURA':m.progress>=1?'COMPLETO':m.produced>0?'PARCIAL':'PENDIENTE'}</span></div><div class="sku-amount"><strong>${num(m.produced)}<small> / ${num(m.planTotal)}</small></strong><span class="sku-track"><i style="width:${Math.max(0,Math.min(100,(m.progress||0)*100))}%;background:${colorAt(m.colorIndex)}"></i></span></div><strong class="sku-pct">${pct(m.progress)}</strong></div>`).join('');
+   $('modelPager').hidden=pages<=1;
+   $('modelPager').textContent=pages>1?`MODELOS ${page*MODEL_PAGE_SIZE+1}–${Math.min(all.length,(page+1)*MODEL_PAGE_SIZE)} DE ${all.length} · PÁGINA ${page+1}/${pages} · CAMBIO AUTOMÁTICO`:'';
+   document.querySelector('.models-card').classList.toggle('single-sku',all.length===1);
+   scheduleFit();
  }
  function renderEmpty(){
-   $('lineLabel').classList.add('empty-line');$('lineLabel').textContent='SIN LÍNEAS ACTIVAS';$('shiftDate').textContent=datestr(dashboard?.date).toUpperCase();$('model').textContent='SIN CAPTURAS DE PRODUCCIÓN HOY';$('order').textContent='—';$('totalPlan').textContent='—';$('lastCapture').textContent='--:--';$('captureText').textContent='Esperando registros en Google Sheets';
-   ['produced','planNow','adherence','gap','plannedRate','remaining','latestCount','latestTime','progressNumber','progressPercent'].forEach(id=>$(id).textContent='—');$('speed').innerHTML='—<small> pzas/h</small>';
-   $('adherence').className='k-val';$('standardFoot').textContent='Estándar: — pzas/h';$('adherenceFoot').textContent='Sin información del turno';$('chart').innerHTML='<div class="empty">En cuanto se capture producción de alguna línea, aparecerá automáticamente en el tablero.</div>';$('chartInfo').textContent='Sin capturas';$('latestPlan').textContent='Plan: — pzas';$('latestPct').textContent='—';$('latestFill').style.width='0%';$('notesContent').innerHTML='<div class="empty">Sin observaciones para mostrar.</div>';
-   $('alertBox').className=connectionError?'alert':'alert warn';$('alertBox').textContent=connectionError ? ('Sin conexión a Google Sheets: '+connectionError) : 'Ninguna de las cuatro líneas tiene una captura de producción para hoy.';$('progressFill').style.width='0%';scheduleFit();
+   $('lineLabel').classList.add('empty-line');$('lineLabel').textContent='SIN LÍNEAS ACTIVAS';
+   $('shiftDate').textContent=datestr(dashboard?.date).toUpperCase();
+   $('heroSubline').textContent='Esperando capturas de producción';$('heroSubline').classList.remove('single-model');
+   $('heroProduced').textContent='—';$('heroPlan').textContent='—';$('heroPercent').textContent='—';
+   $('heroBrief').textContent='Sin producción registrada hoy';$('heroFoot').textContent='Pendientes: — piezas';$('heroFill').style.width='0%';
+   $('lastCapture').textContent='--:--';$('captureText').textContent=connectionError?'No se pudo consultar la hoja':'Esperando capturas en Google Sheets';
+   ['produced','linePlan','adherence','remaining','modelCount','startedCount','cutCompliance','progressNumber','progressPercent','modelCounts'].forEach(id=>$(id).textContent='—');
+   $('modelCountSummary').textContent='Sin registros de producción para hoy';$('cutSummary').textContent='—';$('bottomLine').textContent='LÍNEA —';$('pendingFoot').textContent='Pendientes de todos los modelos';$('adherenceFoot').textContent='Real ÷ plan del turno';
+   $('chart').innerHTML='<div class="empty">En cuanto se capture producción en una línea, aparecerá el resultado del turno completo.</div>';$('chartInfo').textContent='Sin capturas';$('skuLegend').innerHTML='';$('modelList').innerHTML='<div class="empty">Sin modelos capturados hoy.</div>';
+   $('modelPager').hidden=true;document.querySelector('.models-card').classList.remove('single-sku');
+   $('notesContent').textContent='Sin observaciones registradas';$('alertBox').className='alert-strip warn';$('alertBox').textContent=connectionError?'Sin conexión a Google Sheets: '+connectionError:'No hay capturas de producción de hoy en las cuatro líneas.';
+   $('progressFill').style.width='0%';scheduleFit();
  }
  function render(){
-   $('sourceLabel').textContent=connectionError && dashboard ? ('ÚLTIMA CONSULTA FALLÓ · '+connectionError) : 'Lectura directa de Google Sheets · Sin backend ni Apps Script';
+   $('sourceLabel').textContent=connectionError && dashboard?'ÚLTIMA CONSULTA FALLÓ · '+connectionError:'Lectura directa Google Sheets · Sin backend ni Apps Script';
    if(lastRefresh)$('refreshLabel').textContent=`Consultado: ${new Date(lastRefresh).toLocaleTimeString('es-MX',{timeZone:zone,hour:'2-digit',minute:'2-digit',hour12:false})} · Próxima consulta en 5 min`;
    if(!data){renderEmpty();return}
-   if(connectionError){$('captureText').textContent='Últimos datos válidos · conexión interrumpida';}
-   $('lineLabel').classList.remove('empty-line');$('lineLabel').textContent=data.line||'LÍNEA —';$('shiftDate').textContent=datestr(data.date).toUpperCase();$('model').textContent=data.model||'SIN MODELO';$('order').textContent=data.order||'SIN ORDEN';$('totalPlan').textContent=num(data.planTotal);
-   $('lastCapture').textContent=data.latest?.time||'--:--';$('captureText').textContent=data.latest?'Última producción registrada':'Sin capturas registradas';
-   $('produced').textContent=num(data.produced);$('planNow').textContent=num(data.planToNow);$('adherence').textContent=pct(data.adherence);
-   $('adherence').className='k-val '+(data.adherence==null?'':data.adherence>=.95?'accent':data.adherence>=.8?'warn':'bad');
-   $('speed').innerHTML=`${data.actualPerHour==null?'—':Math.round(data.actualPerHour)}<small> pzas/h</small>`;$('standardFoot').textContent=`Estándar: ${data.standardPerHour==null?'no configurado':Math.round(data.standardPerHour)+' pzas/h'}`;
-   $('planFoot').textContent=data.untimedPlanned>0?`Plan con hora · ${data.untimedPlanned} fila(s) sin hora en total`:'Plan del modelo con hora';$('adherenceFoot').textContent=`Brecha: ${data.gap>0?'+':''}${num(data.gap)} piezas`;
-   $('gap').innerHTML=`<span class="${data.gap>=0?'accent':'bad'}">${data.gap>0?'+':''}${num(data.gap)}</span> <small>pzas</small>`;
-   $('plannedRate').innerHTML=`${num(data.plannedPerHour)} <small>pzas/h</small>`;$('remaining').innerHTML=`${num(data.remaining)} <small>pzas</small>`;
-   $('latestCount').innerHTML=`${num(data.latest?.actual)}<small> pzas</small>`;$('latestTime').textContent=data.latest?.time||'—';$('latestPlan').textContent=`Plan: ${num(data.latest?.plan)} pzas`;
-   const lastPct=data.latest?.plan ? data.latest.actual/data.latest.plan : null;$('latestPct').textContent=pct(lastPct);$('latestFill').style.width=`${Math.min(100,Math.max(0,(lastPct||0)*100))}%`;
-   const notes=data.comments||[];$('notesContent').innerHTML=notes.length?notes.map(n=>`<div class="note"><div class="note-time">${esc(n.time)}</div>${esc(n.text)}</div>`).join(''):'<div class="empty">Sin observaciones registradas en la columna W de PLAN EMPAQUE.</div>';
-   const a=$('alertBox');if(data.missingSlots>0){a.className='alert warn';a.textContent=`⚠ ${data.missingSlots} intervalo(s) vencido(s) sin captura. Validar registros antes de interpretar el cumplimiento.`}else if(data.adherence!=null&&data.adherence<.8){a.className='alert';a.textContent=`⚠ Desviación contra el plan: ${num(Math.abs(data.gap))} piezas por debajo de lo programado.`}else if(data.adherence!=null&&data.adherence>=.95){a.className='alert ok';a.textContent='✓ Producción dentro del objetivo de cumplimiento (≥95%).'}else{a.className='alert warn';a.textContent='Producción en seguimiento. Comparar contra el plan de cada intervalo.'} if(data.untimedPlanned>0){a.textContent+=` · ${data.untimedPlanned} fila(s) de este modelo sin hora incluidas en su plan total.`}
-   $('progressNumber').textContent=`${num(data.produced)} / ${num(data.planTotal)}`;$('progressPercent').textContent=pct(data.dayProgress);$('progressFill').style.width=`${Math.max(0,Math.min(100,(data.dayProgress||0)*100))}%`;
+   $('lineLabel').classList.remove('empty-line');$('lineLabel').textContent=data.line||'LÍNEA —';$('shiftDate').textContent=datestr(data.date).toUpperCase();
+   const onlyOne=data.models.length===1;
+   $('heroSubline').textContent=onlyOne?data.models[0].model:`${data.models.length} MODELOS EN EL TURNO`;
+   $('heroSubline').classList.toggle('single-model',onlyOne);
+   $('heroProduced').textContent=num(data.produced);$('heroPlan').textContent=num(data.planTotal);
+   $('heroPercent').textContent=pct(data.dayProgress);
+   $('heroFill').style.width=`${Math.max(0,Math.min(100,(data.dayProgress||0)*100))}%`;
+   $('heroBrief').textContent=onlyOne?'Único modelo programado':`${data.startedCount} de ${data.models.length} modelos con producción`;
+   $('heroFoot').textContent=`Pendientes: ${num(data.remaining)} piezas del turno`;
+   $('lastCapture').textContent=data.latest?.time||'--:--';$('captureText').textContent=connectionError?'Datos anteriores · Sin conexión':'Última producción registrada';
+   $('produced').textContent=num(data.produced);$('linePlan').textContent=num(data.planTotal);$('adherence').textContent=pct(data.dayProgress);$('remaining').textContent=num(data.remaining);
+   $('adherence').className='k-val '+(data.dayProgress==null?'':data.dayProgress>=1?'accent':data.dayProgress>=.8?'warn':'');
+   $('adherenceFoot').textContent=`${data.startedCount} de ${data.models.length} modelos con producción`;
+   $('modelCountSummary').textContent=`${data.models.length} modelos programados · ${data.startedCount} con producción`;
+   $('cutSummary').textContent=data.timedCompliance==null?'Corte horario: sin plan con hora':`Cumplimiento registros con hora: ${pct(data.timedCompliance)} *`;
+   $('pendingFoot').textContent=`${num(data.remaining)} piezas pendientes del turno`;
+   $('modelCount').textContent=String(data.models.length);$('startedCount').textContent=String(data.startedCount);$('cutCompliance').textContent=pct(data.timedCompliance);
+   renderModels();
+   $('notesContent').innerHTML=data.comments.length?data.comments.slice(0,2).map(n=>`<div><strong>${esc(n.time)} · ${esc(n.model)}</strong> ${esc(n.text)}</div>`).join(''):'Sin observaciones en la columna W';
+   const warn=data.missingSlots>0;
+   $('alertBox').className='alert-strip '+(warn?'warn':'ok');
+   $('alertBox').textContent=warn?`${data.missingSlots} captura(s) con hora vencida sin piezas registradas · Revisar en Sheets`:'* El corte horario solo incluye filas que tienen una hora asignada; el plan total incluye también filas sin hora.';
+   $('progressNumber').textContent=`${num(data.produced)} / ${num(data.planTotal)}`;$('progressPercent').textContent=pct(data.dayProgress);$('progressFill').style.width=`${Math.max(0,Math.min(100,(data.dayProgress||0)*100))}%`;$('bottomLine').textContent=data.line;
    renderChart();scheduleFit();
  }
  // Google Visualization API responde mediante una función global llamada desde un script.
@@ -336,94 +519,56 @@ function hhmm(v){const m=String(v??'').match(/^(\d{1,2}):(\d{2})/);return m?`${m
 function standardMap(rows){const out=new Map(); for(const r of rows.slice(1)){const sku=String(r[0]??'').trim().toUpperCase();if(!sku)continue;const pieces=numeric(r[1]),minutes=numeric(r[2]); if(pieces>0 && minutes>0)out.set(sku,{piecesPerPallet:pieces,minutesPerPallet:minutes,perHour:pieces*60/minutes})}return out}
 
 /**
- * UN MODELO POR LÍNEA Y FECHA.
- * G: cantidad programada por fila, incluidas filas SIN hora (J vacía).
- * I: cantidad producida por fila, únicamente del MISMO modelo.
- * J: hora; solo se requiere para situar la producción en la gráfica.
- * No se mezcla el total de otros modelos ni se exige coincidencia de PO.
+ * Contabilidad del turno, sin mezclar indicadores de línea y SKU.
+ * Un día + una línea = TODAS las filas de G (plan) e I (real) por modelo.
+ * Las filas sin J (hora) siguen formando parte del PLAN COMPLETO.
+ * El gráfico agrupa únicamente capturas con hora; no crea horas ficticias.
  */
 function normalizeModel(value){return String(value??'').trim().replace(/\s+/g,' ').toUpperCase()}
 function productionRows(planRows, now){
  const time=mxParts(now);
  return (planRows||[]).slice(1).map((r,i)=>({
-   row:i+2,
-   line:canonicalLine(r[0]),
-   date:dateISO(r[3]||r[1],time),
-   model:String(r[5]??'').trim(),
-   modelKey:normalizeModel(r[5]),
-   plan:numeric(r[6]),
-   order:String(r[7]??'').trim(),
-   actual:numeric(r[8]),
-   time:hhmm(r[9]),
-   comment:String(r[22]??'').trim()
- })).filter(x=>x.line&&x.date&&x.modelKey&&!['COMIDA','DESCANSO'].includes(x.modelKey));
+   row:i+2,line:canonicalLine(r[0]),date:dateISO(r[3]||r[1],time),model:String(r[5]??'').trim(),modelKey:normalizeModel(r[5]),
+   plan:numeric(r[6]),order:String(r[7]??'').trim(),actual:numeric(r[8]),time:hhmm(r[9]),comment:String(r[22]??'').trim()
+ })).filter(x=>x.line&&x.date&&x.modelKey&&!['COMIDA','DESCANSO','ALMUERZO'].includes(x.modelKey));
 }
-function buildProductionSnapshot(planRows,standardRows,now=new Date(),requestedLine=null,parsedRows=null){
- const time=mxParts(now),today=`${time.year}-${String(time.month).padStart(2,'0')}-${String(time.day).padStart(2,'0')}`;
- const standards=standardMap(standardRows);
- const all=parsedRows??productionRows(planRows,now);
- if(!all.length)return {updatedAt:now.toISOString(),source:'Google Sheets',lines:[],error:'No hay filas de producción válidas en PLAN EMPAQUE.'};
- const lines=LINE_NAMES.filter(name=>all.some(r=>r.line===name));
- const line=lines.includes(requestedLine)?requestedLine:lines[0];
- const rowsForLine=all.filter(x=>x.line===line);
- const availableDates=[...new Set(rowsForLine.map(r=>r.date))].sort();
- const datesNotFuture=availableDates.filter(d=>d<=today);
- const date=datesNotFuture.at(-1)||availableDates[0];
- const rowsForDay=rowsForLine.filter(r=>r.date===date).sort((a,b)=>a.row-b.row);
- const todayMinutes=time.hour*60+time.minute;
- const isElapsed=r=>!r.time||date<today||(date===today&&(Number(r.time.slice(0,2))*60+Number(r.time.slice(3))<=todayMinutes));
- // Se identifica el modelo actual por la última captura con hora. Las filas sin hora
- // no pueden reemplazarlo, pues son programación futura del mismo u otro SKU.
- const withTime=rowsForDay.filter(r=>r.time).sort((a,b)=>a.time.localeCompare(b.time)||a.row-b.row);
- const eligible=withTime.filter(isElapsed);
- const last=eligible.filter(r=>r.actual!==null).at(-1)
-   || rowsForDay.filter(r=>!r.time&&r.actual!==null).at(-1)
-   || eligible.at(-1)||rowsForDay[0];
- if(!last)return {updatedAt:now.toISOString(),source:'Google Sheets',lines,date,error:'No hay modelos para la línea.'};
- // El denominador del 100% agrupa TODAS las filas programadas de este modelo
- // en esta línea y fecha, tengan o no hora de empaque; sin sumar otros modelos.
- const jobRows=rowsForDay.filter(r=>r.modelKey===last.modelKey);
- const timedRows=jobRows.filter(r=>r.time).sort((a,b)=>a.time.localeCompare(b.time)||a.row-b.row);
- const slots=timedRows.map(s=>({...s,elapsed:isElapsed(s),missing:false}));
- for(const s of slots)s.missing=s.elapsed&&s.actual===null&&(s.plan??0)>0;
- const elapsed=slots.filter(s=>s.elapsed);
- const capturedRows=jobRows.filter(s=>s.actual!==null&&isElapsed(s));
- const planTotal=jobRows.reduce((sum,s)=>sum+Math.max(0,s.plan??0),0);
- const planToNow=elapsed.reduce((sum,s)=>sum+Math.max(0,s.plan??0),0);
- const produced=capturedRows.reduce((sum,s)=>sum+(s.actual??0),0);
- const timedProduced=elapsed.reduce((sum,s)=>sum+(s.actual??0),0);
- const totalHours=elapsed.filter(s=>(s.plan??0)>0||s.actual!==null).length*.5;
- const standard=standards.get(last.modelKey);
- const lastCapture=elapsed.filter(s=>s.actual!==null).at(-1)||null;
- const noTimeCapture=!lastCapture?capturedRows.filter(s=>!s.time).at(-1):null;
- const latest=lastCapture||noTimeCapture;
- const notes=jobRows.filter(s=>s.comment).map(s=>({time:s.time||'SIN HORA',text:s.comment,model:s.model})).slice(-4).reverse();
- const orders=[...new Set(jobRows.map(x=>x.order).filter(Boolean))];
- const untimedPlanned=jobRows.filter(s=>!s.time&&s.plan>0).length;
- return {source:'Google Sheets',updatedAt:now.toISOString(),lines,line,date,model:last.model,order:orders.length>1?'VARIAS ÓRDENES':(orders[0]||''),
-  planTotal,planToNow,produced,remaining:Math.max(0,planTotal-produced),gap:produced-planToNow,
-  adherence:planToNow?produced/planToNow:null,dayProgress:planTotal?produced/planTotal:null,
-  actualPerHour:totalHours?timedProduced/totalHours:null,standardPerHour:standard?.perHour??null,
-  plannedPerHour:slots.length?((slots.find(s=>s.plan>0)?.plan??0)*2):null,
-  piecesPerPallet:standard?.piecesPerPallet??null,minutesPerPallet:standard?.minutesPerPallet??null,
-  missingSlots:slots.filter(s=>s.missing).length,untimedPlanned,comments:notes,
-  latest:latest?{time:latest.time||'SIN HORA',actual:latest.actual,plan:latest.plan}:null,
-  slots:slots.map(s=>({time:s.time,plan:Math.max(0,s.plan??0),actual:s.actual,elapsed:s.elapsed,missing:s.missing,comment:s.comment}))};
+function buildProductionSnapshot(rows,standards,line,date,minutesNow,today){
+ const rr=rows.filter(r=>r.line===line&&r.date===date).sort((a,b)=>a.row-b.row);
+ const elapsed=r=>!r.time||date<today||(date===today&&(Number(r.time.slice(0,2))*60+Number(r.time.slice(3))<=minutesNow));
+ const modelsMap=new Map();
+ for(const r of rr){
+   if(!modelsMap.has(r.modelKey))modelsMap.set(r.modelKey,{model:r.model,modelKey:r.modelKey,planTotal:0,produced:0,firstRow:r.row,captured:0});
+   const m=modelsMap.get(r.modelKey);
+   m.planTotal+=Math.max(0,r.plan??0);
+   if(r.actual!==null && elapsed(r)){m.produced+=r.actual;m.captured++}
+ }
+ const models=[...modelsMap.values()].map((m,i)=>({...m,colorIndex:i,progress:m.planTotal>0?m.produced/m.planTotal:null,standardPerHour:standards.get(m.modelKey)?.perHour??null}));
+ const captureRows=rr.filter(r=>r.actual!==null&&elapsed(r)).sort((a,b)=>(a.time||'').localeCompare(b.time||'')||a.row-b.row);
+ const latest=captureRows.at(-1)||null;
+ const currentModel=latest?models.find(m=>m.modelKey===latest.modelKey):null;
+ // La línea solo se habilita con piezas capturadas (incluye 0 explícito si se capturó).
+ const slots=rr.filter(r=>r.time).sort((a,b)=>a.time.localeCompare(b.time)||a.row-b.row).map(r=>({...r,elapsed:elapsed(r),missing:elapsed(r)&&r.actual===null&&(r.plan??0)>0}));
+ const timedEligible=slots.filter(r=>r.elapsed);
+ const cutPlan=timedEligible.reduce((sum,r)=>sum+Math.max(0,r.plan??0),0);
+ const cutActual=timedEligible.reduce((sum,r)=>sum+(r.actual??0),0);
+ const planTotal=models.reduce((sum,m)=>sum+m.planTotal,0);
+ const produced=models.reduce((sum,m)=>sum+m.produced,0);
+ const orders=[...new Set(rr.filter(r=>r.modelKey===latest?.modelKey).map(r=>r.order).filter(Boolean))];
+ const comments=rr.filter(r=>r.comment).map(r=>({model:r.model,time:r.time||'SIN HORA',text:r.comment})).sort((a,b)=>b.time.localeCompare(a.time));
+ return {source:'Google Sheets',line,date,model:currentModel?.model||null,order:orders.length>1?'VARIAS ÓRDENES':orders[0]||'—',
+   models,currentModel,planTotal,produced,remaining:Math.max(0,planTotal-produced),dayProgress:planTotal>0?produced/planTotal:null,
+   startedCount:models.filter(m=>m.captured>0).length,missingSlots:slots.filter(s=>s.missing).length,
+   timedCompliance:cutPlan>0?cutActual/cutPlan:null,cutPlan,cutActual,
+   latest:latest?{time:latest.time||'SIN HORA',actual:latest.actual,plan:latest.plan,model:latest.model}:null,
+   comments,slots};
 }
-
-/** Autoplay consulta solo los snapshots activos; no hace peticiones adicionales. */
 function buildProductionDashboard(planRows,standardRows,now=new Date()){
  const p=mxParts(now),today=`${p.year}-${String(p.month).padStart(2,'0')}-${String(p.day).padStart(2,'0')}`;
- const minutesNow=p.hour*60+p.minute;
- const all=productionRows(planRows,now);
- const activeLines=LINE_NAMES.filter(line=>all.some(r=>{
-   const slotMinutes=r.time?Number(r.time.slice(0,2))*60+Number(r.time.slice(3)):null;
-   return r.line===line && r.date===today && r.actual!==null && (slotMinutes===null||slotMinutes<=minutesNow);
- }));
- const snapshots=Object.fromEntries(activeLines.map(line=>[line,buildProductionSnapshot(planRows,standardRows,now,line,all)]));
+ const minutesNow=p.hour*60+p.minute,rows=productionRows(planRows,now),standards=standardMap(standardRows);
+ const activeLines=LINE_NAMES.filter(line=>rows.some(r=>r.line===line&&r.date===today&&r.actual!==null&&(!r.time||(Number(r.time.slice(0,2))*60+Number(r.time.slice(3))<=minutesNow))));
+ const snapshots=Object.fromEntries(activeLines.map(line=>[line,buildProductionSnapshot(rows,standards,line,today,minutesNow,today)]));
  return {source:'Google Sheets',updatedAt:now.toISOString(),date:today,lines:LINE_NAMES,activeLines,snapshots};
 }
-
  async function refresh(){
    if(busy)return;
    busy=true;$('refreshButton').disabled=true;
@@ -450,6 +595,12 @@ function buildProductionDashboard(planRows,standardRows,now=new Date()){
  document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(c=>c.classList.toggle('active',c===b));if(data)renderChart();scheduleFit()}));
  $('lineButtons').addEventListener('click',e=>{const b=e.target.closest('button[data-line]');if(b&&!b.disabled)chooseLine(b.dataset.line,true)});
  $('autoplayButton').addEventListener('click',()=>setAutoplay(!autoplay));
+ // Cuando hay más de cinco SKU, cada pantalla recorre su lista sin cambiar de línea.
+ setInterval(()=>{if(!data || data.models.length<=MODEL_PAGE_SIZE)return;
+   const count=Math.ceil(data.models.length/MODEL_PAGE_SIZE);
+   modelPages[data.line]=((modelPages[data.line]||0)+1)%count;
+   renderModels();
+ },12000);
  updateClock();updateLineButtons();scheduleFit();setInterval(updateClock,1000);setInterval(refresh,300000);refresh();
 })();
 </script>
