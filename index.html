@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080e1b">
+  <title>PRODIESA · Empaque | TV · 15s</title>
+  <style>
+    :root{color-scheme:dark;--bg:#080e1b;--panel:#101929;--panel2:#151f32;--stroke:#243149;--muted:#91a0bb;--text:#f2f6ff;--lime:#4de4ae;--blue:#67a9ff;--amber:#fdbf5c;--red:#fb7484}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
+    body:before{content:"";position:fixed;z-index:-1;inset:0;background:radial-gradient(ellipse at 45% -30%,#173047 0%,transparent 57%),radial-gradient(ellipse at 130% 80%,#101f31 0%,transparent 40%)}
+    button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+    .shell{width:min(1940px,100%);margin:0 auto;padding:26px 34px 30px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 1px 24px}
+    .brand{display:flex;align-items:center;gap:14px}.mark{width:51px;height:51px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(145deg,#43e3b1,#0d8b9f);font-size:26px;font-weight:950;color:#081724;box-shadow:0 8px 30px #20cba929}
+    .eyebrow{letter-spacing:2.25px;font-size:11px;font-weight:800;color:var(--lime)}.brand-title{font-size:25px;font-weight:830;line-height:1.13;letter-spacing:-.6px}.brand-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .top-right{display:flex;align-items:center;gap:15px;flex-wrap:wrap;justify-content:flex-end}.clock{text-align:right;min-width:113px}.clock strong{font-size:28px;letter-spacing:-.6px;font-variant-numeric:tabular-nums}.clock small{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px}
+    .pill{display:flex;align-items:center;gap:8px;color:var(--lime);border:1px solid #2d685d;background:#153730;font-size:12px;font-weight:800;letter-spacing:1.1px;border-radius:100px;padding:10px 13px;white-space:nowrap}.pill.demo{background:#3e3020;border-color:#8e6b32;color:#ffca70}.dot{width:8px;height:8px;border-radius:100%;background:currentColor;box-shadow:0 0 12px currentColor}
+    .btn{border:1px solid var(--stroke);color:#c7d5ea;background:#142033;border-radius:12px;min-height:40px;padding:0 13px;font-weight:700;font-size:12px}.btn:hover{background:#1d2d45}.btn.strong{background:var(--lime);border-color:var(--lime);color:#071824}
+    .hero{background:linear-gradient(113deg,#14243a 0%,#101a2e 59%,#132638 100%);border:1px solid #2b3a54;border-radius:20px;padding:23px 28px;display:flex;justify-content:space-between;align-items:center;gap:30px;min-height:153px;overflow:hidden;position:relative}
+    .hero:after{content:"";pointer-events:none;position:absolute;width:300px;height:300px;right:12%;top:-160px;border:1px solid #4ce4b318;border-radius:50%;box-shadow:0 0 0 45px #4ce4b00a,0 0 0 96px #4ce4b005}
+    .hero>*{position:relative;z-index:1}.hero-meta{display:flex;align-items:center;gap:12px;color:#a8bbd1;font-size:12px;font-weight:750;letter-spacing:1.25px}.hero-bullet{width:8px;height:8px;background:var(--lime);border-radius:50%}.model{font-weight:900;font-size:clamp(32px,3vw,54px);letter-spacing:-2px;line-height:1.13;margin-top:8px}.model-details{color:#aebdd3;font-size:15px;margin-top:9px}.model-details strong{color:white}.hero-side{text-align:right;min-width:270px}.hero-side small{font-size:12px;letter-spacing:1.5px;color:#97abc3;font-weight:800}.hero-side strong{font-size:42px;letter-spacing:-1.8px;display:block;margin:3px 0}.hero-side span{font-size:14px;color:#a7bad1}
+    /* La línea es el dato principal de la TV: aparece gigante a la izquierda del SKU. */
+    .hero-content{display:flex;align-items:center;flex:1;min-width:0;gap:24px}
+    .hero-line{font-size:clamp(47px,3.75vw,72px);font-weight:950;line-height:.98;letter-spacing:-3px;color:#73f5cf;white-space:nowrap;flex:0 0 auto;min-width:278px;padding:9px 26px 9px 0;border-right:3px solid #4de4ae}
+    .hero-model-block{min-width:0;flex:1}
+    .hero-model-block .model{font-size:clamp(29px,2.7vw,52px);margin-top:10px;overflow-wrap:anywhere}
+    .hero-date{font-weight:650;margin-left:12px;color:#8da5c4;letter-spacing:.8px}
+    @media(max-width:1500px){.hero-line{font-size:clamp(43px,3.85vw,58px);min-width:235px;padding-right:19px}.hero-content{gap:19px}.hero-side{min-width:190px}}
+    @media(min-width:1200px) and (max-height:1150px){.hero{min-height:147px}.hero-line{font-size:clamp(52px,4.2vw,72px)}.hero-model-block .model{font-size:clamp(30px,2.85vw,52px)}}
+    @media(max-width:950px){.hero{flex-wrap:wrap}.hero-content{width:100%;flex-basis:100%}.hero-line{min-width:0;font-size:clamp(37px,5vw,60px)}.hero-side{min-width:0;text-align:left}}
+    @media(max-width:560px){.hero-content{gap:12px;align-items:flex-start;flex-direction:column}.hero-line{border-right:0;border-bottom:2px solid #4de4ae;padding:0 0 10px;width:100%;font-size:50px}.hero-model-block .model{font-size:31px}.hero-side strong{font-size:32px}}
+    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:18px}.kpi{border:1px solid var(--stroke);background:linear-gradient(180deg,#142034,#10192a);border-radius:18px;padding:19px 22px;min-height:152px;position:relative;overflow:hidden}.kpi:before{content:"";position:absolute;width:70px;height:3px;left:22px;top:0;background:var(--blue)}.kpi.actual:before{background:var(--lime)}.kpi.adherence:before{background:var(--amber)}.kpi.speed:before{background:#b8a0ff}
+    .k-label{font-size:12px;color:#a2b1c7;letter-spacing:1px;text-transform:uppercase;font-weight:800}.k-val{font-weight:900;font-size:clamp(39px,4.1vw,64px);line-height:1.1;letter-spacing:-2.4px;margin-top:13px;font-variant-numeric:tabular-nums}.k-val small{font-size:18px;letter-spacing:0;font-weight:680;color:var(--muted)}.k-foot{font-size:13px;color:#94a6bf;margin-top:7px}.accent{color:var(--lime)}.bad{color:var(--red)}.warn{color:var(--amber)}
+    .main{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(305px,.72fr);gap:18px;margin-top:18px}.pane{border:1px solid var(--stroke);background:#101929f5;border-radius:20px;padding:23px 25px;min-width:0}
+    .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.panel-head h2{font-size:21px;margin:0;letter-spacing:-.5px}.panel-head p{font-size:12px;margin:5px 0 0;color:#91a2bc}.switch{display:flex;gap:4px;padding:4px;border:1px solid #29384f;border-radius:11px;background:#0c1423;flex-shrink:0}.switch button{background:transparent;border:0;color:#96abc4;border-radius:8px;font-size:12px;font-weight:800;padding:8px 12px}.switch button.active{background:#273a54;color:#f4faff}
+    .legend{display:flex;align-items:center;gap:19px;margin:21px 0 0;color:#aebdd2;font-size:12px}.legend i{width:12px;height:12px;display:inline-block;border-radius:3px;margin-right:6px;vertical-align:-1px}.legend .lr{background:var(--lime)}.legend .lp{background:#46698c}
+    .chart{height:290px;display:flex;align-items:flex-end;gap:clamp(3px,.5vw,9px);padding:27px 0 0;border-bottom:1px solid #34455f;overflow:hidden;position:relative}.chart:before,.chart:after{content:"";pointer-events:none;position:absolute;left:0;right:0;border-top:1px dashed #29405d}.chart:before{top:35%}.chart:after{top:67%}
+    .slot{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:end;align-items:center;position:relative}.bar-top{font-size:clamp(10px,.9vw,15px);font-weight:850;color:#c7fbe8;line-height:1;white-space:nowrap;margin-bottom:5px;font-variant-numeric:tabular-nums}.slot.future .bar-top{visibility:hidden}.bars{width:100%;height:205px;max-width:55px;display:flex;gap:3px;justify-content:center;align-items:flex-end}.bar{border-radius:5px 5px 0 0;min-width:3px;transition:height .5s ease;width:45%;position:relative}.bar.plan{background:#46698c}.bar.real{background:linear-gradient(0deg,#179c86,#52f0ad)}.slot.low .bar.real{background:linear-gradient(0deg,#ad495d,#fa7585)}.slot.mid .bar.real{background:linear-gradient(0deg,#a3752a,#ffd06c)}.slot.future .bar.plan{background:#293c54;opacity:.55}.slot.future .bar.real{height:0!important}.slot.missing .bar.plan{background:#bd8641}.slot.missing .bar-top{color:var(--amber);visibility:visible}
+    .slot-time{height:35px;display:flex;align-items:center;justify-content:center;font-size:clamp(10px,.8vw,12px);color:#91a8c2;font-variant-numeric:tabular-nums}.slot.current .slot-time{color:var(--lime);font-weight:850}
+    .below-chart{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:24px}.little{border:1px solid #26364d;background:#131f30;border-radius:13px;padding:13px 15px}.little .x{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#a1b0c9}.little .y{font-size:25px;font-weight:830;margin-top:4px;letter-spacing:-.5px}.little small{font-size:13px;color:var(--muted);font-weight:600}
+    .side{display:flex;flex-direction:column;gap:16px}.highlight{border-radius:15px;border:1px solid #33435a;background:#17243a;padding:20px}.side-title{font-size:11px;text-transform:uppercase;letter-spacing:1.25px;color:#9eafc7;font-weight:800}.latest-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:10px 0 8px}.latest-number{font-size:56px;letter-spacing:-2px;font-weight:900;line-height:1}.latest-number small{font-size:18px;font-weight:700;color:#a7b8d0}.latest-time{font-size:15px;color:#d3e1f5;font-weight:850}.progress-bg{background:#29374c;border-radius:999px;height:10px;overflow:hidden}.progress-fill{height:100%;background:var(--lime);border-radius:999px;transition:width .5s}.latest-foot{margin-top:10px;display:flex;justify-content:space-between;color:#96aac2;font-size:13px}
+    .notes{padding:18px;border:1px solid #2a3850;border-radius:15px;background:#111d2e;flex:1;min-height:148px}.note-body{margin-top:14px}.empty{font-size:14px;line-height:1.5;color:#a9b9d0}.note{margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #2d3c52;color:#dbe6f5;font-size:13px;line-height:1.45}.note:last-child{margin-bottom:0;padding-bottom:0;border-bottom:0}.note-time{color:var(--lime);font-size:11px;font-weight:800;margin-bottom:3px}.alert{margin-top:14px;border-radius:12px;background:#35262b;border:1px solid #70434c;color:#f7bec3;padding:12px 14px;font-size:13px;line-height:1.45;font-weight:650}.alert.ok{background:#18352f;border-color:#306659;color:#a9f2d3}.alert.warn{background:#3a2e21;border-color:#745631;color:#ffd79d}
+    .bottom{margin-top:18px;background:#111b2c;border:1px solid #28374e;border-radius:17px;padding:19px 24px;display:grid;grid-template-columns:250px 1fr 140px;align-items:center;gap:28px}.bottom-title{color:#a3b5cd;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;font-size:12px}.bottom-nums{font-weight:860;font-size:22px;margin-top:3px}.bottom-nums span{font-size:13px;color:#96a8bf;font-weight:600}.bottom .progress-bg{height:15px;background:#283c52}.bottom .progress-fill{background:linear-gradient(90deg,#199e91,#4ce7b2)}.bottom-end{text-align:right}.bottom-end strong{font-weight:900;font-size:37px;letter-spacing:-1px}.bottom-end small{display:block;color:#93a7c1;font-size:11px;letter-spacing:1px;font-weight:800}
+    .footnote{font-size:11px;color:#6d7f99;display:flex;align-items:center;justify-content:space-between;padding:16px 4px 0;gap:15px}
+    .overlay{position:fixed;inset:0;background:#040811da;display:flex;align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(8px)}.modal{width:min(460px,calc(100vw - 30px));background:#121f32;border:1px solid #38506a;border-radius:24px;padding:30px;box-shadow:0 30px 100px #000b}.modal h2{font-size:25px;margin:7px 0}.modal p{line-height:1.6;font-size:14px;color:#a6b6ca}.modal input{border-radius:11px;border:1px solid #43566d;background:#0a1423;padding:14px;color:white;width:100%;margin:9px 0 14px}.modal button{width:100%;height:47px}.hidden{display:none!important}
+
+    /* Selector fijo de líneas; en modo TV nunca queda oculto. */
+    .line-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 13px;padding:11px 15px;border:1px solid #2d3f59;border-radius:17px;background:#111d30}
+    .line-toolbar-left{display:flex;align-items:center;gap:18px;min-width:0;flex:1}.line-toolbar-title{font-size:11px;font-weight:850;letter-spacing:1.05px;color:#a4b5cb;white-space:nowrap}
+    .line-buttons{display:grid;grid-template-columns:repeat(4,minmax(105px,1fr));gap:8px;flex:1;max-width:785px}.line-btn{border:1px solid #334862;background:#17283d;color:#e4ecf7;display:flex;align-items:center;justify-content:center;gap:9px;border-radius:11px;padding:9px 9px;min-height:53px;transition:background .2s,border-color .2s}
+    .line-btn .line-led{height:9px;width:9px;flex:0 0 9px;background:var(--lime);border-radius:50%;box-shadow:0 0 12px #4de4ae55}.line-btn .line-copy{text-align:left}.line-btn strong{display:block;font-size:14px;line-height:1.1}.line-btn small{font-size:9px;font-weight:800;letter-spacing:.5px;color:#a5b7cf;white-space:nowrap}.line-btn:hover:not(:disabled){background:#263d53}
+    .line-btn.selected{background:#173b39;border-color:#51e1ae;box-shadow:inset 0 0 0 1px #51e1ae33,0 0 22px #36cda112}.line-btn.selected strong{color:#8cf5d0}.line-btn.selected small{color:#6ddcb6}
+    .line-btn:disabled{cursor:not-allowed;background:#111a28;border-color:#26364b;opacity:.47}.line-btn:disabled .line-led{background:#63718a;box-shadow:none}.line-btn:disabled small{color:#8797af}
+    .line-toolbar-right{display:flex;align-items:center;gap:13px;flex-shrink:0}.active-summary{color:#9fb0c8;font-size:12px;font-weight:750;white-space:nowrap}.autoplay-btn{min-width:205px;min-height:54px;border:1px solid #3f5872;background:#1b2b42;color:#e9f4ff;font-weight:850;font-size:14px;border-radius:12px;padding:9px 15px;display:flex;align-items:center;gap:11px;justify-content:center;transition:all .2s}.autoplay-btn span.auto-icon{font-size:18px}.autoplay-btn small{display:block;color:#a0b4cb;font-size:10px;font-weight:700;margin-top:2px}.autoplay-btn.on{color:#0b2a24;background:#51e3b2;border-color:#51e3b2;box-shadow:0 0 22px #37d09f2e}.autoplay-btn.on small{color:#225a4b}.autoplay-btn:disabled{opacity:.42;cursor:not-allowed}
+    @media (min-width:1200px) and (max-height:1150px){.line-toolbar{padding:8px 12px;margin-bottom:10px}.line-btn{min-height:45px;padding:6px 8px}.autoplay-btn{min-height:45px}.line-toolbar-title{font-size:10px}}
+    @media (max-width:1200px){.line-toolbar{flex-wrap:wrap}.line-toolbar-left{flex-wrap:wrap;width:100%}.line-toolbar-title{width:100%}.line-toolbar-right{width:100%;justify-content:space-between}}
+    @media (max-width:600px){.line-buttons{grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.line-btn{min-height:53px}.line-toolbar-right{flex-wrap:wrap}.autoplay-btn{width:100%}.line-toolbar{padding:11px}}
+    @media(min-width:1600px){.shell{padding-top:32px}.hero{min-height:172px}.kpi{min-height:165px}.chart{height:325px}.bars{height:230px}.pane{padding:28px}.side .highlight{padding:24px}}
+    @media(min-width:1200px) and (max-height:1150px){
+      .shell{padding:17px 28px 15px}.top{padding-bottom:14px}.mark{width:44px;height:44px}.brand-title{font-size:22px}.clock strong{font-size:24px}
+      .hero{min-height:130px;padding:16px 24px}.model{font-size:43px}.model-details{margin-top:5px}.hero-side strong{font-size:35px}
+      .kpis{gap:13px;margin-top:12px}.kpi{min-height:129px;padding:16px 18px}.k-val{font-size:51px;margin-top:8px}.k-foot{margin-top:5px}
+      .main{margin-top:12px;gap:13px}.pane{padding:19px 21px}.panel-head h2{font-size:19px}.legend{margin-top:15px}
+      .chart{height:224px;padding-top:8px}.bars{height:150px}.below-chart{margin-top:13px;gap:10px}.little{padding:10px 12px}.little .y{font-size:23px}
+      .side{gap:11px}.highlight{padding:15px 18px}.latest-row{margin:8px 0 7px}.latest-number{font-size:44px}.notes{padding:16px;min-height:125px}.note-body{margin-top:11px}.alert{margin-top:10px;padding:10px 12px}
+      .bottom{margin-top:12px;padding:12px 18px}.footnote{padding:9px 4px 0}
+    }
+    @media(max-width:1100px){.shell{padding:18px}.main{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}.kpis{gap:10px}.kpi{padding:16px}.bottom{grid-template-columns:185px 1fr 90px;gap:14px}}
+    @media(max-width:700px){.top{flex-wrap:wrap}.top-right{width:100%;justify-content:space-between}.hero{flex-wrap:wrap;padding:20px}.hero-side{text-align:left}.kpis{grid-template-columns:repeat(2,1fr)}.side{display:flex}.main{gap:12px}.pane{padding:16px}.chart{height:240px}.bars{height:155px}.below-chart{grid-template-columns:1fr 1fr}.bottom{grid-template-columns:1fr 75px}.bottom .progress-bg{grid-column:1/-1;grid-row:2}.bottom-end{grid-column:2;grid-row:1}.panel-head{flex-wrap:wrap}.shell{padding:10px}.bar-top{font-size:10px}.slot-time{font-size:9px}.hero-side strong{font-size:35px}}
+
+    /* TV AUTO-FIT: un lienzo estable para que el tablero no se reorganice ni corte KPI
+       al entrar/salir de pantalla completa o cambiar el tamaño del navegador.
+       El JavaScript mide su ancho/alto real y lo escala sin deformarlo. */
+    html.tv-autofit,html.tv-autofit body{width:100%;height:100%;min-height:0;overflow:hidden;overscroll-behavior:none}
+    html.tv-autofit #dashboard{position:fixed;top:0;left:0;width:1600px!important;max-width:none!important;margin:0;transform-origin:top left;will-change:transform;padding:14px 28px 11px}
+    html.tv-autofit .top{flex-wrap:nowrap;padding-bottom:10px}
+    html.tv-autofit .mark{width:45px;height:45px}
+    html.tv-autofit .top-right{width:auto;flex-wrap:nowrap;justify-content:flex-end}
+    html.tv-autofit .line-toolbar{flex-wrap:nowrap;padding:6px 12px;margin-bottom:9px}
+    html.tv-autofit .line-toolbar-left{width:auto;flex-wrap:nowrap}
+    html.tv-autofit .line-toolbar-title{width:auto}
+    html.tv-autofit .line-buttons{width:auto;grid-template-columns:repeat(4,minmax(105px,1fr))}
+    html.tv-autofit .line-toolbar-right{width:auto;flex-wrap:nowrap;justify-content:flex-end}
+    html.tv-autofit .line-btn{min-height:43px;padding:5px 8px}
+    html.tv-autofit .autoplay-btn{width:auto;min-height:43px}
+    html.tv-autofit .hero{min-height:130px;padding:13px 23px;flex-wrap:nowrap}
+    html.tv-autofit .hero-content{width:auto;flex-basis:auto;flex-direction:row;align-items:center;gap:25px}
+    html.tv-autofit .hero-line{min-width:277px;max-width:370px;width:auto;font-size:66px;white-space:nowrap;border-right:3px solid #4de4ae;border-bottom:0;padding:9px 26px 9px 0}
+    html.tv-autofit .hero-model-block .model{font-size:47px;line-height:1.1}
+    html.tv-autofit .hero-side{min-width:200px;text-align:right}
+    html.tv-autofit .hero-side strong{font-size:39px}
+    html.tv-autofit .kpis{grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-top:12px}
+    html.tv-autofit .kpi{min-height:118px;padding:13px 17px}
+    html.tv-autofit .k-val{font-size:51px;margin-top:8px}
+    html.tv-autofit .main{grid-template-columns:minmax(0,1.8fr) minmax(305px,.72fr);gap:13px;margin-top:12px}
+    html.tv-autofit .pane{padding:16px 19px}
+    html.tv-autofit .panel-head{flex-wrap:nowrap}
+    html.tv-autofit .side{display:flex;flex-direction:column;gap:11px}
+    html.tv-autofit .legend{margin-top:16px}
+    html.tv-autofit .chart{height:219px;padding-top:8px}
+    html.tv-autofit .bars{height:147px}
+    html.tv-autofit .below-chart{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:10px;gap:10px}
+    html.tv-autofit .little{padding:8px 12px}
+    html.tv-autofit .highlight{padding:16px 18px}
+    html.tv-autofit .notes{min-height:133px;padding:16px}
+    html.tv-autofit .bottom{grid-template-columns:250px minmax(0,1fr) 140px;gap:24px;margin-top:10px;padding:9px 18px}
+    html.tv-autofit .bottom .progress-bg{grid-column:auto;grid-row:auto}
+    html.tv-autofit .bottom-end{grid-column:auto;grid-row:auto}
+    html.tv-autofit .footnote{padding:6px 4px 0}
+    /* En estado sin capturas, el mensaje largo no rompe la cabecera. */
+    html.tv-autofit .hero-line.empty-line{font-size:35px;line-height:1.15;white-space:normal;min-width:278px;width:278px;letter-spacing:-1.3px}
+  </style>
+</head>
+<body>
+<script>document.documentElement.classList.add('tv-autofit');</script>
+<div class="shell" id="dashboard">
+  <header class="top">
+    <div class="brand"><div class="mark">P</div><div><div class="eyebrow">PRODIESA · PLANTA 1</div><div class="brand-title">Control de Empaque</div><div class="brand-sub">Seguimiento de producción · Hora por hora</div></div></div>
+    <div class="top-right">
+      <div class="pill demo" id="connection"><span class="dot"></span><span id="connectionText">CONECTANDO</span></div>
+      <div class="clock"><strong id="clock">--:--</strong><small id="todayLabel">--</small></div>
+      <button class="btn" id="refreshButton" title="Actualizar ahora">↻ Actualizar</button>
+      <button class="btn" id="screenButton" title="Pantalla completa">⛶ TV</button>
+    </div>
+  </header>
+  <nav class="line-toolbar" aria-label="Selección y rotación de líneas de empaque">
+    <div class="line-toolbar-left"><span class="line-toolbar-title">LÍNEAS DE EMPAQUE</span><div class="line-buttons" id="lineButtons" role="group" aria-label="Líneas 1 a 4"></div></div>
+    <div class="line-toolbar-right"><span class="active-summary" id="activeSummary">Buscando capturas...</span><button class="autoplay-btn" id="autoplayButton" type="button" aria-pressed="false" disabled title="Rotar líneas activas cada 15 segundos"><span class="auto-icon" id="autoplayIcon">▶</span><span><span id="autoplayLabel">Autoplay</span><small id="autoplayDetail">Cada 15 segundos</small></span></button></div>
+  </nav>
+  <section class="hero" aria-label="Línea y modelo actualmente mostrados">
+    <div class="hero-content">
+      <div class="hero-line" id="lineLabel" aria-label="Línea seleccionada">LÍNEA —</div>
+      <div class="hero-model-block">
+        <div class="hero-meta"><span class="hero-bullet"></span><span>MODELO EN PRODUCCIÓN</span><span class="hero-date" id="shiftDate">—</span></div>
+        <div class="model" id="model">CARGANDO PRODUCCIÓN</div>
+        <div class="model-details">ORDEN: <strong id="order">—</strong> &nbsp; · &nbsp; PLAN DEL MODELO: <strong id="totalPlan">—</strong> piezas</div>
+      </div>
+    </div>
+    <div class="hero-side"><small>ÚLTIMA CAPTURA</small><strong id="lastCapture">--:--</strong><span id="captureText">Consultando Google Sheets...</span></div>
+  </section>
+  <div class="kpis">
+    <section class="kpi actual"><div class="k-label">Producción acumulada</div><div class="k-val accent" id="produced">—</div><div class="k-foot">Piezas registradas del modelo</div></section>
+    <section class="kpi"><div class="k-label">Plan hasta esta hora</div><div class="k-val" id="planNow">—</div><div class="k-foot" id="planFoot">Piezas programadas al corte</div></section>
+    <section class="kpi adherence"><div class="k-label">Cumplimiento del plan</div><div class="k-val" id="adherence">—</div><div class="k-foot" id="adherenceFoot">Comparativo con plan acumulado</div></section>
+    <section class="kpi speed"><div class="k-label">Ritmo real vs. estándar</div><div class="k-val" id="speed">—</div><div class="k-foot" id="standardFoot">Estándar: — pzas/h</div></section>
+  </div>
+  <main class="main">
+    <section class="pane">
+      <div class="panel-head"><div><h2>Producción hora por hora</h2><p id="chartSubtitle">Piezas reales contra programa · se actualiza cada 5 minutos</p></div><div class="switch"><button class="active" data-mode="half">30 min</button><button data-mode="hour">Por hora</button></div></div>
+      <div class="legend"><span><i class="lr"></i> Real</span><span><i class="lp"></i> Programado</span><span style="margin-left:auto;color:#8095af" id="chartInfo">— intervalos</span></div>
+      <div class="chart" id="chart" role="img" aria-label="Barras de producción real contra planeada"></div>
+      <div class="below-chart"><div class="little"><div class="x">Brecha contra plan</div><div class="y" id="gap">—</div></div><div class="little"><div class="x">Plan por hora</div><div class="y" id="plannedRate">—</div></div><div class="little"><div class="x">Por producir</div><div class="y" id="remaining">—</div></div></div>
+    </section>
+    <aside class="side">
+      <div class="highlight"><div class="side-title">Último intervalo registrado</div><div class="latest-row"><div class="latest-number" id="latestCount">—<small> pzas</small></div><div class="latest-time" id="latestTime">—</div></div><div class="progress-bg"><div class="progress-fill" id="latestFill" style="width:0%"></div></div><div class="latest-foot"><span id="latestPlan">Plan: — pzas</span><span id="latestPct">—</span></div></div>
+      <div class="notes"><div class="side-title">Comentarios y observaciones</div><div class="note-body" id="notesContent"><div class="empty">Sin observaciones registradas.</div></div><div class="alert" id="alertBox">Revisando el cumplimiento...</div></div>
+    </aside>
+  </main>
+  <div class="bottom"><div><div class="bottom-title">Avance del programa</div><div class="bottom-nums"><strong id="progressNumber">— / —</strong> <span>piezas</span></div></div><div class="progress-bg"><div class="progress-fill" id="progressFill" style="width:0%"></div></div><div class="bottom-end"><strong id="progressPercent">—</strong><small>DEL PLAN TOTAL</small></div></div>
+  <div class="footnote"><span id="sourceLabel">Fuente: PLAN EMPAQUE + MINXPALLET · Solo lectura</span><span id="refreshLabel">Actualización automática cada 5 min</span></div>
+</div>
+<script>
+(() => {
+ const $=id=>document.getElementById(id), fmt=new Intl.NumberFormat('es-MX',{maximumFractionDigits:0}), pct=x=>x==null?'—':`${Math.round(x*100)}%`, num=n=>n==null?'—':fmt.format(n), esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const zone='America/Mexico_City', allLines=['LÍNEA 1','LÍNEA 2','LÍNEA 3','LÍNEA 4'];
+
+ // AUTO-AJUSTE A PANTALLA: mismo lienzo, escala uniforme, sin scroll ni recortes.
+ // ResizeObserver detecta también nuevas capturas, cambio de línea o comentarios largos.
+ const FIT_BASE_WIDTH=1600, fitBoard=$('dashboard');
+ let fitFrame=0;
+ function fitToViewport(){
+   fitFrame=0;
+   const vv=window.visualViewport;
+   const vw=vv?.width||document.documentElement.clientWidth||window.innerWidth;
+   const vh=vv?.height||window.innerHeight;
+   if(!vw||!vh)return;
+   const edge=Math.max(5,Math.min(16,Math.round(Math.min(vw,vh)*0.012)));
+   const contentW=Math.max(FIT_BASE_WIDTH,fitBoard.scrollWidth,fitBoard.offsetWidth);
+   const contentH=Math.max(1,fitBoard.scrollHeight,fitBoard.offsetHeight);
+   const fit=Math.max(.05,Math.min((vw-edge*2)/contentW,(vh-edge*2)/contentH));
+   const x=Math.max(edge,Math.round((vw-contentW*fit)/2));
+   const y=Math.max(edge,Math.round((vh-contentH*fit)/2));
+   const offsetX=vv?.offsetLeft||0, offsetY=vv?.offsetTop||0;
+   fitBoard.style.transform=`translate3d(${x+offsetX}px,${y+offsetY}px,0) scale(${fit})`;
+   fitBoard.dataset.fitScale=fit.toFixed(3);
+   fitBoard.dataset.fitViewport=`${vw}x${vh}`;
+ }
+ function scheduleFit(){if(fitFrame)cancelAnimationFrame(fitFrame);fitFrame=requestAnimationFrame(fitToViewport);}
+ window.addEventListener('resize',scheduleFit,{passive:true});
+ window.visualViewport?.addEventListener('resize',scheduleFit,{passive:true});
+ document.addEventListener('fullscreenchange',scheduleFit);
+ window.addEventListener('orientationchange',scheduleFit,{passive:true});
+ if(typeof ResizeObserver!=='undefined')new ResizeObserver(scheduleFit).observe(fitBoard);
+ document.fonts?.ready.then(scheduleFit);
+
+ // ÚNICAS OPCIONES DE CONEXIÓN: spreadsheet ID y GIDs de las dos pestañas.
+ const SHEET_ID='1q6hB1JpQ8V35Gv3qpsWVFzxuGZmXKseLoJRAnvIQcOI';
+ const GIDS={plan:0,standards:1789978757};
+ let dashboard=null,data=null,mode='half',busy=false,chosenLine='',lastRefresh=0,autoplay=false,autoplayTimer=null,connectionError='';
+ const datestr=s=>{if(!s)return'—';const [y,m,d]=s.split('-').map(Number);return new Intl.DateTimeFormat('es-MX',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(y,m-1,d)))};
+ function updateClock(){const now=new Date();$('clock').textContent=new Intl.DateTimeFormat('es-MX',{timeZone:zone,hour:'2-digit',minute:'2-digit',hour12:false}).format(now);$('todayLabel').textContent=new Intl.DateTimeFormat('es-MX',{timeZone:zone,weekday:'short',day:'numeric',month:'short'}).format(now)}
+ function setConnection(kind,label){$('connection').classList.toggle('demo',kind!=='ok');$('connection').style.color=kind==='error'?'#fb7484':kind==='ok'?'#4de4ae':'#ffca70';$('connectionText').textContent=label}
+ const activeLines=()=>allLines.filter(l=>dashboard?.activeLines?.includes(l)&&dashboard?.snapshots?.[l]);
+ function updateLineButtons(){
+   const actives=activeLines();
+   $('lineButtons').innerHTML=allLines.map(l=>{const active=actives.includes(l),selected=active&&chosenLine===l;
+     return `<button type="button" class="line-btn ${selected?'selected':''}" data-line="${esc(l)}" ${active?'':'disabled'} aria-pressed="${selected}" title="${active?l+' · Con producción capturada':l+' · Sin producción capturada hoy'}"><span class="line-led"></span><span class="line-copy"><strong>${esc(l.replace('LÍNEA','Línea'))}</strong><small>${active?'CON CAPTURA':'SIN CAPTURA'}</small></span></button>`;
+   }).join('');
+   $('activeSummary').textContent=`${actives.length} ${actives.length===1?'línea activa':'líneas activas'}`;
+   if(actives.length<2&&autoplay)setAutoplay(false);
+   $('autoplayButton').disabled=actives.length<2;
+   $('autoplayButton').title=actives.length<2?'Se necesitan al menos 2 líneas con captura':'Rotar solo las líneas con captura cada 15 segundos';
+   $('autoplayButton').classList.toggle('on',autoplay);
+   $('autoplayButton').setAttribute('aria-pressed',String(autoplay));
+   $('autoplayIcon').textContent=autoplay?'Ⅱ':'▶';
+   $('autoplayLabel').textContent=autoplay?'Detener autoplay':'Autoplay';
+   $('autoplayDetail').textContent=actives.length<2?'Mínimo 2 líneas activas':autoplay?'Rotando cada 15 s':'Cada 15 segundos';
+ }
+ function chooseLine(line,fromManual=false){
+   if(!activeLines().includes(line))return;
+   if(fromManual&&autoplay)setAutoplay(false);
+   chosenLine=line;data=dashboard.snapshots[line];updateLineButtons();render();
+ }
+ function nextLine(){const actives=activeLines();if(!autoplay||actives.length<2)return;const index=actives.indexOf(chosenLine);chooseLine(actives[(index+1)%actives.length]);}
+ function setAutoplay(value){
+   if(autoplayTimer){clearInterval(autoplayTimer);autoplayTimer=null;}
+   autoplay=!!value && activeLines().length>=2;
+   if(autoplay)autoplayTimer=setInterval(nextLine,15000);
+   updateLineButtons();
+ }
+ function useDashboard(next){
+   dashboard=next;
+   const actives=activeLines();
+   if(!actives.includes(chosenLine))chosenLine=actives[0]||'';
+   data=chosenLine?dashboard.snapshots[chosenLine]:null;
+   updateLineButtons();render();
+ }
+ function aggregate(slots){if(mode==='half')return slots.filter(s=>s.plan>0||s.actual!==null).map(s=>({...s,label:s.time}));
+   const hours=new Map();for(const s of slots){if(!(s.plan>0||s.actual!==null))continue;const hour=s.time.slice(0,2)+':00';if(!hours.has(hour))hours.set(hour,{label:hour,plan:0,actual:0,elapsed:false,hasActual:false,missing:false});const g=hours.get(hour);g.plan+=s.plan||0;if(s.elapsed){g.elapsed=true;if(s.actual!==null){g.actual+=s.actual;g.hasActual=true}if(s.missing)g.missing=true}}return [...hours.values()].map(g=>({...g,actual:g.hasActual?g.actual:null}));
+ }
+ function renderChart(){const slots=aggregate(data?.slots||[]),highest=Math.max(1,...slots.flatMap(s=>[s.plan||0,s.actual||0]))*1.13;
+   $('chartInfo').textContent=`${slots.length} ${mode==='half'?'intervalos':'horas'}`;
+   $('chart').innerHTML=slots.map(s=>{const ratio=s.plan>0?(s.actual||0)/s.plan:1;const state=!s.elapsed?'future':s.missing?'missing':ratio<.8?'low':ratio<.95?'mid':'good';const ph=(s.plan||0)/highest*100,ah=(s.actual||0)/highest*100;
+     return `<div class="slot ${state} ${s.time===data.latest?.time?'current':''}" title="${esc(s.label)}: Real ${s.actual==null?'sin captura':num(s.actual)} / Plan ${num(s.plan)}"><div class="bar-top">${s.missing?'!':s.actual===null?'':num(s.actual)}</div><div class="bars"><div class="bar real" style="height:${ah}%"></div><div class="bar plan" style="height:${ph}%"></div></div><div class="slot-time">${esc(s.label)}</div></div>`;
+   }).join('')||'<div class="empty">No hay intervalos registrados.</div>';
+ }
+ function renderEmpty(){
+   $('lineLabel').classList.add('empty-line');$('lineLabel').textContent='SIN LÍNEAS ACTIVAS';$('shiftDate').textContent=datestr(dashboard?.date).toUpperCase();$('model').textContent='SIN CAPTURAS DE PRODUCCIÓN HOY';$('order').textContent='—';$('totalPlan').textContent='—';$('lastCapture').textContent='--:--';$('captureText').textContent='Esperando registros en Google Sheets';
+   ['produced','planNow','adherence','gap','plannedRate','remaining','latestCount','latestTime','progressNumber','progressPercent'].forEach(id=>$(id).textContent='—');$('speed').innerHTML='—<small> pzas/h</small>';
+   $('adherence').className='k-val';$('standardFoot').textContent='Estándar: — pzas/h';$('adherenceFoot').textContent='Sin información del turno';$('chart').innerHTML='<div class="empty">En cuanto se capture producción de alguna línea, aparecerá automáticamente en el tablero.</div>';$('chartInfo').textContent='Sin capturas';$('latestPlan').textContent='Plan: — pzas';$('latestPct').textContent='—';$('latestFill').style.width='0%';$('notesContent').innerHTML='<div class="empty">Sin observaciones para mostrar.</div>';
+   $('alertBox').className=connectionError?'alert':'alert warn';$('alertBox').textContent=connectionError ? ('Sin conexión a Google Sheets: '+connectionError) : 'Ninguna de las cuatro líneas tiene una captura de producción para hoy.';$('progressFill').style.width='0%';scheduleFit();
+ }
+ function render(){
+   $('sourceLabel').textContent=connectionError && dashboard ? ('ÚLTIMA CONSULTA FALLÓ · '+connectionError) : 'Lectura directa de Google Sheets · Sin backend ni Apps Script';
+   if(lastRefresh)$('refreshLabel').textContent=`Consultado: ${new Date(lastRefresh).toLocaleTimeString('es-MX',{timeZone:zone,hour:'2-digit',minute:'2-digit',hour12:false})} · Próxima consulta en 5 min`;
+   if(!data){renderEmpty();return}
+   if(connectionError){$('captureText').textContent='Últimos datos válidos · conexión interrumpida';}
+   $('lineLabel').classList.remove('empty-line');$('lineLabel').textContent=data.line||'LÍNEA —';$('shiftDate').textContent=datestr(data.date).toUpperCase();$('model').textContent=data.model||'SIN MODELO';$('order').textContent=data.order||'SIN ORDEN';$('totalPlan').textContent=num(data.planTotal);
+   $('lastCapture').textContent=data.latest?.time||'--:--';$('captureText').textContent=data.latest?'Última producción registrada':'Sin capturas registradas';
+   $('produced').textContent=num(data.produced);$('planNow').textContent=num(data.planToNow);$('adherence').textContent=pct(data.adherence);
+   $('adherence').className='k-val '+(data.adherence==null?'':data.adherence>=.95?'accent':data.adherence>=.8?'warn':'bad');
+   $('speed').innerHTML=`${data.actualPerHour==null?'—':Math.round(data.actualPerHour)}<small> pzas/h</small>`;$('standardFoot').textContent=`Estándar: ${data.standardPerHour==null?'no configurado':Math.round(data.standardPerHour)+' pzas/h'}`;
+   $('planFoot').textContent='Piezas programadas al corte';$('adherenceFoot').textContent=`Brecha: ${data.gap>0?'+':''}${num(data.gap)} piezas`;
+   $('gap').innerHTML=`<span class="${data.gap>=0?'accent':'bad'}">${data.gap>0?'+':''}${num(data.gap)}</span> <small>pzas</small>`;
+   $('plannedRate').innerHTML=`${num(data.plannedPerHour)} <small>pzas/h</small>`;$('remaining').innerHTML=`${num(data.remaining)} <small>pzas</small>`;
+   $('latestCount').innerHTML=`${num(data.latest?.actual)}<small> pzas</small>`;$('latestTime').textContent=data.latest?.time||'—';$('latestPlan').textContent=`Plan: ${num(data.latest?.plan)} pzas`;
+   const lastPct=data.latest?.plan ? data.latest.actual/data.latest.plan : null;$('latestPct').textContent=pct(lastPct);$('latestFill').style.width=`${Math.min(100,Math.max(0,(lastPct||0)*100))}%`;
+   const notes=data.comments||[];$('notesContent').innerHTML=notes.length?notes.map(n=>`<div class="note"><div class="note-time">${esc(n.time)}</div>${esc(n.text)}</div>`).join(''):'<div class="empty">Sin observaciones registradas en la columna W de PLAN EMPAQUE.</div>';
+   const a=$('alertBox');if(data.missingSlots>0){a.className='alert warn';a.textContent=`⚠ ${data.missingSlots} intervalo(s) vencido(s) sin captura. Validar registros antes de interpretar el cumplimiento.`}else if(data.adherence!=null&&data.adherence<.8){a.className='alert';a.textContent=`⚠ Desviación contra el plan: ${num(Math.abs(data.gap))} piezas por debajo de lo programado.`}else if(data.adherence!=null&&data.adherence>=.95){a.className='alert ok';a.textContent='✓ Producción dentro del objetivo de cumplimiento (≥95%).'}else{a.className='alert warn';a.textContent='Producción en seguimiento. Comparar contra el plan de cada intervalo.'}
+   $('progressNumber').textContent=`${num(data.produced)} / ${num(data.planTotal)}`;$('progressPercent').textContent=pct(data.dayProgress);$('progressFill').style.width=`${Math.max(0,Math.min(100,(data.dayProgress||0)*100))}%`;
+   renderChart();scheduleFit();
+ }
+ // Google Visualization API responde mediante una función global llamada desde un script.
+ // Así el HTML consulta Google directamente sin fetch CORS, proxy ni servidor.
+ let requestIndex=0;
+ function gvizCell(cell){
+   if(!cell)return '';
+   if(typeof cell.v==='number')return cell.v;
+   if(Array.isArray(cell.v))return cell.v.map((v,i)=>i<2?String(v).padStart(2,'0'):String(v).padStart(2,'0')).join(':');
+   if(cell.f!=null&&cell.f!=='')return cell.f;
+   const v=cell.v;
+   if(typeof v==='string'){
+     const d=v.match(/^Date\((\d+),(\d+),(\d+)/);
+     if(d)return `${d[1]}-${String(+d[2]+1).padStart(2,'0')}-${d[3].padStart(2,'0')}`;
+   }
+   return v??'';
+ }
+ function queryGoogleSheet(gid,range){
+   return new Promise((resolve,reject)=>{
+     const callback='prodiesaSheetsCallback'+(++requestIndex);
+     const params=new URLSearchParams({gid:String(gid),headers:'1',range,
+       tqx:`out:json;responseHandler:${callback}`,_:String(Date.now())});
+     const script=document.createElement('script');
+     script.async=true;
+     script.src=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?${params}`;
+     let closed=false;
+     const cleanup=()=>{clearTimeout(timeout);script.remove();delete window[callback];};
+     const fail=msg=>{if(closed)return;closed=true;cleanup();reject(new Error(msg));};
+     const timeout=setTimeout(()=>fail(`Google no respondió para la pestaña ${gid}. Verifica que tenga lectura pública.`),18000);
+     window[callback]=(payload)=>{
+       if(closed)return;
+       if(payload.status!=='ok'||!payload.table){
+         const error=payload.errors?.map(e=>e.detailed_message||e.message).filter(Boolean).join(' · ')||'Sin acceso a Google Sheets';
+         return fail(error);
+       }
+       closed=true;
+       const rows=(payload.table.rows||[]).map(r=>Array.from({length:payload.table.cols?.length||23},(_,i)=>gvizCell(r.c?.[i])));
+       cleanup();
+       // La fila 1 es encabezado (headers=1). buildProductionDashboard espera encabezado.
+       resolve([[],...rows]);
+     };
+     script.onerror=()=>fail('No se pudo acceder directamente a Google Sheets. Revisa la publicación/los permisos.');
+     document.head.appendChild(script);
+   });
+ }
+const MONTHS = {ene:1,enero:1,feb:2,febrero:2,mar:3,marzo:3,abr:4,abril:4,may:5,mayo:5,jun:6,junio:6,jul:7,julio:7,ago:8,agosto:8,sep:9,sept:9,septiembre:9,oct:10,octubre:10,nov:11,noviembre:11,dic:12,diciembre:12};
+const mxParts = date => Object.fromEntries(new Intl.DateTimeFormat('en-US', {timeZone:'America/Mexico_City',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(date).filter(x=>x.type!=='literal').map(x=>[x.type, Number(x.value)]));
+const numeric = v => {if(v===undefined||v===null||String(v).trim()==='')return null;const s=String(v).trim().replace(/\s/g,''); const n=Number(s.includes(',')&&s.includes('.') ? s.replace(/,/g,'') : s.replace(',','.'));return Number.isFinite(n)?n:null};
+const LINE_NAMES = Object.freeze(['LÍNEA 1','LÍNEA 2','LÍNEA 3','LÍNEA 4']);
+function canonicalLine(value){const m=String(value??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim().match(/^(?:LINEA\s*|L\s*)(0?[1-4])$/);return m?`LÍNEA ${Number(m[1])}`:null}
+function dateISO(value, parts) {
+ if(value==null || value==='') return null;
+ const s=String(value).toLowerCase().trim();
+ const iso=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/); if(iso)return `${iso[1]}-${iso[2].padStart(2,'0')}-${iso[3].padStart(2,'0')}`;
+ const match=s.match(/^(\d{1,2})[\/-]([a-záéíóú]+|\d{1,2})(?:[\/-](\d{2,4}))?$/i);
+ if(!match)return null;
+ const day=Number(match[1]), month=MONTHS[match[2]] || Number(match[2]);
+ if(!Number.isInteger(month)||month<1||month>12||day<1||day>31)return null;
+ let year= match[3] ? Number(match[3]) : parts.year;
+ if(year<100)year+=2000;
+ if(!match[3] && month>parts.month+1)year--;
+ return `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+}
+function hhmm(v){const m=String(v??'').match(/^(\d{1,2}):(\d{2})/);return m?`${m[1].padStart(2,'0')}:${m[2]}`:null}
+function standardMap(rows){const out=new Map(); for(const r of rows.slice(1)){const sku=String(r[0]??'').trim().toUpperCase();if(!sku)continue;const pieces=numeric(r[1]),minutes=numeric(r[2]); if(pieces>0 && minutes>0)out.set(sku,{piecesPerPallet:pieces,minutesPerPallet:minutes,perHour:pieces*60/minutes})}return out}
+
+/** One model/order currently being packed on a line, with the original KPI definitions. */
+function buildProductionSnapshot(planRows, standardRows, now=new Date(), requestedLine=null){
+ const time=mxParts(now),today=`${time.year}-${String(time.month).padStart(2,'0')}-${String(time.day).padStart(2,'0')}`;
+ const standards=standardMap(standardRows);
+ const all=(planRows||[]).slice(1).map((r,i)=>({row:i+2,line:canonicalLine(r[0]),date:dateISO(r[3] || r[1],time),model:String(r[5]??'').trim(),plan:numeric(r[6]),order:String(r[7]??'').trim(),actual:numeric(r[8]),time:hhmm(r[9]),comment:String(r[22]??'').trim()})).filter(x=>x.line&&x.date&&x.model&&x.time);
+ if(!all.length)return {updatedAt:now.toISOString(),source:'Google Sheets',lines:[],error:'No hay filas de producción válidas en PLAN EMPAQUE.'};
+ const lines=LINE_NAMES.filter(name=>all.some(r=>r.line===name));
+ const line=lines.includes(requestedLine)?requestedLine:lines[0];
+ const rowsForLine=all.filter(x=>x.line===line);
+ const availableDates=[...new Set(rowsForLine.map(r=>r.date))].sort();
+ const datesNotFuture=availableDates.filter(d=>d<=today);
+ const date=datesNotFuture.at(-1)||availableDates[0];
+ const rowsForDay=rowsForLine.filter(r=>r.date===date).sort((a,b)=>a.time.localeCompare(b.time)||a.row-b.row);
+ const todayMinutes=time.hour*60+time.minute;
+ const eligible=rowsForDay.filter(r=> date<today || (date===today && Number(r.time.slice(0,2))*60+Number(r.time.slice(3))<=todayMinutes));
+ const last=eligible.filter(x=>x.actual!==null).at(-1) || eligible.at(-1) || rowsForDay[0];
+ const jobRows=rowsForDay.filter(x=>x.model===last.model && x.order===last.order);
+ const slots=jobRows.map(s=>{const minutes=Number(s.time.slice(0,2))*60+Number(s.time.slice(3));return {...s,elapsed:date<today||(date===today&&minutes<=todayMinutes),missing:false};});
+ for(const s of slots)s.missing=s.elapsed&&s.actual===null&&(s.plan??0)>0;
+ const elapsed=slots.filter(s=>s.elapsed);
+ const planTotal=slots.reduce((sum,s)=>sum+(s.plan||0),0);
+ const planToNow=elapsed.reduce((sum,s)=>sum+(s.plan||0),0);
+ const produced=elapsed.reduce((sum,s)=>sum+(s.actual||0),0);
+ // No contar como tiempo productivo intervalos sin plan ni captura (ej. casillas vacías al final del día).
+	 const totalHours=elapsed.filter(s=>(s.plan??0)>0 || s.actual!==null).length*.5;
+ const standard=standards.get(last.model.toUpperCase());
+ const captured=slots.filter(s=>s.actual!==null && s.elapsed);
+ const lastCapture=captured.at(-1)||null;
+ const notes=slots.filter(s=>s.comment).map(s=>({time:s.time,text:s.comment,model:s.model})).slice(-4).reverse();
+ return {source:'Google Sheets',updatedAt:now.toISOString(),lines,line,date,model:last.model,order:last.order,
+  planTotal,planToNow,produced,remaining:Math.max(0,planTotal-produced),gap:produced-planToNow,
+  adherence:planToNow?produced/planToNow:null,dayProgress:planTotal?produced/planTotal:null,
+  actualPerHour:totalHours?produced/totalHours:null,standardPerHour:standard?.perHour??null,
+  plannedPerHour:slots.length?((slots.find(s=>s.plan>0)?.plan??0)*2):null,
+  piecesPerPallet:standard?.piecesPerPallet??null,minutesPerPallet:standard?.minutesPerPallet??null,
+  missingSlots:slots.filter(s=>s.missing).length,comments:notes,
+  latest: lastCapture?{time:lastCapture.time,actual:lastCapture.actual,plan:lastCapture.plan}:null,
+  slots:slots.map(s=>({time:s.time,plan:s.plan||0,actual:s.actual,elapsed:s.elapsed,missing:s.missing,comment:s.comment}))};
+}
+
+/** One Google Sheets request yields ALL TV views. Autoplay never calls this endpoint itself. */
+function buildProductionDashboard(planRows,standardRows,now=new Date()){
+ const p=mxParts(now),today=`${p.year}-${String(p.month).padStart(2,'0')}-${String(p.day).padStart(2,'0')}`;
+ const minutesNow=p.hour*60+p.minute;
+ const activeLines=LINE_NAMES.filter(line=>(planRows||[]).slice(1).some(r=>{
+   const clock=hhmm(r[9]);const slotMinutes=clock?Number(clock.slice(0,2))*60+Number(clock.slice(3)):Infinity;
+   return canonicalLine(r[0])===line && dateISO(r[3]||r[1],p)===today && numeric(r[8])!==null && slotMinutes<=minutesNow && String(r[5]??'').trim();
+ }));
+ const snapshots=Object.fromEntries(activeLines.map(line=>[line,buildProductionSnapshot(planRows,standardRows,now,line)]));
+ return {source:'Google Sheets',updatedAt:now.toISOString(),date:today,lines:LINE_NAMES,activeLines,snapshots};
+}
+
+ async function refresh(){
+   if(busy)return;
+   busy=true;$('refreshButton').disabled=true;
+   try{
+     const [planRows,standardsRows]=await Promise.all([
+       queryGoogleSheet(GIDS.plan,'A1:W1000'),queryGoogleSheet(GIDS.standards,'A1:F1000')
+     ]);
+     if(planRows.length<2)throw new Error('PLAN EMPAQUE no contiene registros visibles');
+     if(standardsRows.length<2)throw new Error('MINXPALLET no contiene los estándares');
+     const next=buildProductionDashboard(planRows,standardsRows,new Date());
+     connectionError='';useDashboard(next);lastRefresh=Date.now();setConnection('ok','GOOGLE SHEETS · 5 MIN');render();
+   }catch(e){
+     connectionError=e.message||'Error de lectura';
+     setConnection('error','SIN ACCESO A SHEETS');
+     $('refreshLabel').textContent='ERROR DE LECTURA · Reintento automático cada 5 min';
+     $('captureText').textContent=dashboard ? 'DATOS ANTERIORES · SIN CONEXIÓN' : connectionError;
+     if(dashboard){$('alertBox').className='alert';$('alertBox').textContent='⚠ Falló la actualización: '+connectionError+'. La pantalla muestra los últimos datos válidos, no información nueva.';$('sourceLabel').textContent='SIN CONEXIÓN · Datos de la última consulta correcta';}
+     if(!dashboard){useDashboard({date:new Date().toISOString().slice(0,10),activeLines:[],snapshots:{}});$('captureText').textContent=connectionError;}
+     console.error('PRODIESA — Lectura directa de Google Sheets:',e);
+   }finally{busy=false;$('refreshButton').disabled=false;}
+ }
+ $('refreshButton').addEventListener('click',refresh);
+ $('screenButton').addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()});
+ document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(c=>c.classList.toggle('active',c===b));if(data)renderChart();scheduleFit()}));
+ $('lineButtons').addEventListener('click',e=>{const b=e.target.closest('button[data-line]');if(b&&!b.disabled)chooseLine(b.dataset.line,true)});
+ $('autoplayButton').addEventListener('click',()=>setAutoplay(!autoplay));
+ updateClock();updateLineButtons();scheduleFit();setInterval(updateClock,1000);setInterval(refresh,300000);refresh();
+})();
+</script>
+</body>
+</html>
