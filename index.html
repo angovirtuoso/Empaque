@@ -10,8 +10,8 @@
     *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
     body:before{content:"";position:fixed;z-index:-1;inset:0;background:radial-gradient(ellipse at 45% -30%,#173047 0%,transparent 57%),radial-gradient(ellipse at 130% 80%,#101f31 0%,transparent 40%)}
     button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-    .shell{width:min(1940px,100%);margin:0 auto;padding:26px 34px 30px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 1px 24px}
+    .shell{width:100%;max-width:none;margin:0 auto;padding:18px 18px 16px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 1px 16px}
     .brand{display:flex;align-items:center;gap:14px}.mark{width:51px;height:51px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(145deg,#43e3b1,#0d8b9f);font-size:26px;font-weight:950;color:#081724;box-shadow:0 8px 30px #20cba929}
     .eyebrow{letter-spacing:2.25px;font-size:11px;font-weight:800;color:var(--lime)}.brand-title{font-size:25px;font-weight:830;line-height:1.13;letter-spacing:-.6px}.brand-sub{font-size:12px;color:var(--muted);margin-top:4px}
     .top-right{display:flex;align-items:center;gap:15px;flex-wrap:wrap;justify-content:flex-end}.clock{text-align:right;min-width:113px}.clock strong{font-size:28px;letter-spacing:-.6px;font-variant-numeric:tabular-nums}.clock small{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px}
@@ -30,16 +30,16 @@
     @media(min-width:1200px) and (max-height:1150px){.hero{min-height:147px}.hero-line{font-size:clamp(52px,4.2vw,72px)}.hero-model-block .model{font-size:clamp(30px,2.85vw,52px)}}
     @media(max-width:950px){.hero{flex-wrap:wrap}.hero-content{width:100%;flex-basis:100%}.hero-line{min-width:0;font-size:clamp(37px,5vw,60px)}.hero-side{min-width:0;text-align:left}}
     @media(max-width:560px){.hero-content{gap:12px;align-items:flex-start;flex-direction:column}.hero-line{border-right:0;border-bottom:2px solid #4de4ae;padding:0 0 10px;width:100%;font-size:50px}.hero-model-block .model{font-size:31px}.hero-side strong{font-size:32px}}
-    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:18px}.kpi{border:1px solid var(--stroke);background:linear-gradient(180deg,#142034,#10192a);border-radius:18px;padding:19px 22px;min-height:152px;position:relative;overflow:hidden}.kpi:before{content:"";position:absolute;width:70px;height:3px;left:22px;top:0;background:var(--blue)}.kpi.actual:before{background:var(--lime)}.kpi.adherence:before{background:var(--amber)}.kpi.speed:before{background:#b8a0ff}
-    .k-label{font-size:12px;color:#a2b1c7;letter-spacing:1px;text-transform:uppercase;font-weight:800}.k-val{font-weight:900;font-size:clamp(39px,4.1vw,64px);line-height:1.1;letter-spacing:-2.4px;margin-top:13px;font-variant-numeric:tabular-nums}.k-val small{font-size:18px;letter-spacing:0;font-weight:680;color:var(--muted)}.k-foot{font-size:13px;color:#94a6bf;margin-top:7px}.accent{color:var(--lime)}.bad{color:var(--red)}.warn{color:var(--amber)}
-    .main{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(305px,.72fr);gap:18px;margin-top:18px}.pane{border:1px solid var(--stroke);background:#101929f5;border-radius:20px;padding:23px 25px;min-width:0}
+    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}.kpi{border:1px solid var(--stroke);background:linear-gradient(180deg,#142034,#10192a);border-radius:18px;padding:14px 18px;min-height:122px;position:relative;overflow:hidden}.kpi:before{content:"";position:absolute;width:60px;height:3px;left:18px;top:0;background:var(--blue)}.kpi.actual:before{background:var(--lime)}.kpi.adherence:before{background:var(--amber)}.kpi.speed:before{background:#b8a0ff}
+    .k-label{font-size:13px;color:#c5d6ea;letter-spacing:1px;text-transform:uppercase;font-weight:900}.k-val{font-weight:900;font-size:clamp(42px,4.2vw,66px);line-height:1.05;letter-spacing:-2.4px;margin-top:8px;font-variant-numeric:tabular-nums}.k-val small{font-size:18px;letter-spacing:0;font-weight:680;color:var(--muted)}.k-foot{font-size:11px;color:#94a6bf;margin-top:5px}.accent{color:var(--lime)}.bad{color:var(--red)}.warn{color:var(--amber)}
+    .main{display:grid;grid-template-columns:minmax(0,2.05fr) minmax(360px,.9fr);gap:14px;margin-top:12px}.pane{border:1px solid var(--stroke);background:#101929f5;border-radius:20px;padding:18px 20px;min-width:0}
     .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.panel-head h2{font-size:16px;margin:0;letter-spacing:.15px;line-height:1.08;font-weight:900;text-transform:uppercase;color:#cfe1f2}.panel-head p{font-size:12px;margin:5px 0 0;color:#91a2bc}.switch{display:flex;gap:4px;padding:4px;border:1px solid #29384f;border-radius:11px;background:#0c1423;flex-shrink:0}.switch button{background:transparent;border:0;color:#96abc4;border-radius:8px;font-size:12px;font-weight:800;padding:8px 12px}.switch button.active{background:#273a54;color:#f4faff}
-    .legend{display:flex;align-items:center;gap:19px;margin:21px 0 0;color:#aebdd2;font-size:12px}.legend i{width:12px;height:12px;display:inline-block;border-radius:3px;margin-right:6px;vertical-align:-1px}.legend .lr{background:var(--lime)}.legend .lp{background:#46698c}
-    .chart{height:290px;display:flex;align-items:flex-end;gap:clamp(3px,.5vw,9px);padding:27px 0 0;border-bottom:1px solid #34455f;overflow:hidden;position:relative}.chart:before,.chart:after{content:"";pointer-events:none;position:absolute;left:0;right:0;border-top:1px dashed #29405d}.chart:before{top:35%}.chart:after{top:67%}
+    .legend{display:flex;align-items:center;gap:16px;margin:12px 0 0;color:#aebdd2;font-size:11px}.legend i{width:12px;height:12px;display:inline-block;border-radius:3px;margin-right:6px;vertical-align:-1px}.legend .lr{background:var(--lime)}.legend .lp{background:#46698c}
+    .chart{height:312px;display:flex;align-items:flex-end;gap:clamp(3px,.5vw,9px);padding:22px 0 0;border-bottom:1px solid #34455f;overflow:hidden;position:relative}.chart:before,.chart:after{content:"";pointer-events:none;position:absolute;left:0;right:0;border-top:1px dashed #29405d}.chart:before{top:35%}.chart:after{top:67%}
     .slot{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:end;align-items:center;position:relative}.bar-top{font-size:clamp(10px,.9vw,15px);font-weight:850;color:#c7fbe8;line-height:1;white-space:nowrap;margin-bottom:5px;font-variant-numeric:tabular-nums}.slot.future .bar-top{visibility:hidden}.bars{width:100%;height:205px;max-width:55px;display:flex;gap:3px;justify-content:center;align-items:flex-end}.bar{border-radius:5px 5px 0 0;min-width:3px;transition:height .5s ease;width:45%;position:relative}.bar.plan{background:#46698c}.bar.real{background:linear-gradient(0deg,#179c86,#52f0ad)}.slot.low .bar.real{background:linear-gradient(0deg,#ad495d,#fa7585)}.slot.mid .bar.real{background:linear-gradient(0deg,#a3752a,#ffd06c)}.slot.future .bar.plan{background:#293c54;opacity:.55}.slot.future .bar.real{height:0!important}.slot.missing .bar.plan{background:#bd8641}.slot.missing .bar-top{color:var(--amber);visibility:visible}
     .slot-time{height:35px;display:flex;align-items:center;justify-content:center;font-size:clamp(10px,.8vw,12px);color:#91a8c2;font-variant-numeric:tabular-nums}.slot.current .slot-time{color:var(--lime);font-weight:850}
     .below-chart{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:24px}.little{border:1px solid #26364d;background:#131f30;border-radius:13px;padding:13px 15px}.little .x{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#a1b0c9}.little .y{font-size:25px;font-weight:830;margin-top:4px;letter-spacing:-.5px}.little small{font-size:13px;color:var(--muted);font-weight:600}
-    .side{display:flex;flex-direction:column;gap:16px}.highlight{border-radius:15px;border:1px solid #33435a;background:#17243a;padding:20px}.side-title{font-size:16px;text-transform:uppercase;letter-spacing:1.05px;color:#cfe1f2;font-weight:900;line-height:1.08}.latest-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:10px 0 8px}.latest-number{font-size:56px;letter-spacing:-2px;font-weight:900;line-height:1}.latest-number small{font-size:18px;font-weight:700;color:#a7b8d0}.latest-time{font-size:15px;color:#d3e1f5;font-weight:850}.progress-bg{background:#29374c;border-radius:999px;height:10px;overflow:hidden}.progress-fill{height:100%;background:var(--lime);border-radius:999px;transition:width .5s}.latest-foot{margin-top:10px;display:flex;justify-content:space-between;color:#96aac2;font-size:13px}
+    .side{display:flex;flex-direction:column;gap:12px}.highlight{border-radius:15px;border:1px solid #33435a;background:#17243a;padding:20px}.side-title{font-size:16px;text-transform:uppercase;letter-spacing:1.05px;color:#cfe1f2;font-weight:900;line-height:1.08}.latest-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:10px 0 8px}.latest-number{font-size:56px;letter-spacing:-2px;font-weight:900;line-height:1}.latest-number small{font-size:18px;font-weight:700;color:#a7b8d0}.latest-time{font-size:15px;color:#d3e1f5;font-weight:850}.progress-bg{background:#29374c;border-radius:999px;height:10px;overflow:hidden}.progress-fill{height:100%;background:var(--lime);border-radius:999px;transition:width .5s}.latest-foot{margin-top:10px;display:flex;justify-content:space-between;color:#96aac2;font-size:13px}
     .notes{padding:18px;border:1px solid #2a3850;border-radius:15px;background:#111d2e;flex:1;min-height:148px}.note-body{margin-top:14px}.empty{font-size:14px;line-height:1.5;color:#a9b9d0}.note{margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #2d3c52;color:#dbe6f5;font-size:13px;line-height:1.45}.note:last-child{margin-bottom:0;padding-bottom:0;border-bottom:0}.note-time{color:var(--lime);font-size:11px;font-weight:800;margin-bottom:3px}.alert{margin-top:14px;border-radius:12px;background:#35262b;border:1px solid #70434c;color:#f7bec3;padding:12px 14px;font-size:13px;line-height:1.45;font-weight:650}.alert.ok{background:#18352f;border-color:#306659;color:#a9f2d3}.alert.warn{background:#3a2e21;border-color:#745631;color:#ffd79d}
     .bottom{margin-top:18px;background:#111b2c;border:1px solid #28374e;border-radius:17px;padding:19px 24px;display:grid;grid-template-columns:250px 1fr 140px;align-items:center;gap:28px}.bottom-title{color:#a3b5cd;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;font-size:12px}.bottom-nums{font-weight:860;font-size:22px;margin-top:3px}.bottom-nums span{font-size:13px;color:#96a8bf;font-weight:600}.bottom .progress-bg{height:15px;background:#283c52}.bottom .progress-fill{background:linear-gradient(90deg,#199e91,#4ce7b2)}.bottom-end{text-align:right}.bottom-end strong{font-weight:900;font-size:37px;letter-spacing:-1px}.bottom-end small{display:block;color:#93a7c1;font-size:11px;letter-spacing:1px;font-weight:800}
     .footnote{font-size:11px;color:#6d7f99;display:flex;align-items:center;justify-content:space-between;padding:16px 4px 0;gap:15px}
@@ -174,7 +174,7 @@
     html.tv-autofit .bottom{margin-top:9px}
 
     /* V4 · Jerarquía de lectura en TV: primero la línea completa, después los SKU. */
-    html.tv-autofit .hero-line-first{display:grid;grid-template-columns:310px minmax(0,1fr) 340px;gap:25px;min-height:153px;padding:16px 23px;align-items:center}
+    html.tv-autofit .hero-line-first{display:grid;grid-template-columns:280px minmax(0,1.35fr) 300px;gap:18px;min-height:146px;padding:14px 18px;align-items:center}
     html.tv-autofit .hero-identity{min-width:0;display:flex;justify-content:center;flex-direction:column}
     html.tv-autofit .hero-line-first .hero-line{min-width:0;max-width:none;border:0;padding:0;margin:0;width:auto;font-size:74px;line-height:1;letter-spacing:-3px}
     .hero-subline{font-size:14px;font-weight:750;letter-spacing:.25px;color:#a6bad1;margin-top:12px;min-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -219,29 +219,29 @@
     html.tv-autofit .chart{height:236px}
 
     /* V5 · Equivalentes de pallet por línea y global real de todas las líneas. */
-    .pallet-strip{margin-top:12px;display:grid;grid-template-columns:minmax(245px,1.36fr) repeat(3,minmax(145px,1fr));gap:10px}
+    .pallet-strip{margin-top:10px;display:grid;grid-template-columns:minmax(285px,1.7fr) repeat(3,minmax(170px,1fr));gap:12px}
     .pallet-intro,.pallet-measure{border:1px solid #2b4058;background:#142238;border-radius:13px;padding:11px 17px;min-width:0;display:flex;flex-direction:column;justify-content:center}
-    .pallet-title{font-size:16px;font-weight:900;letter-spacing:1.05px;color:#d5e5f7;line-height:1.08}.pallet-description{font-size:11px;color:#a6bbcf;margin-top:5px}
-    .pallet-note{font-size:10px;color:#8196ae;margin-top:3px}
+    .pallet-title{font-size:16px;font-weight:900;letter-spacing:1.05px;color:#d5e5f7;line-height:1.08}.pallet-description{font-size:12px;color:#b7c9db;margin-top:4px}
+    .pallet-note{display:none}
     .pallet-measure{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:center;gap:2px 12px;border-top:3px solid #6ea5ed}
-    .pallet-measure span{font-size:11px;font-weight:850;letter-spacing:1px;color:#a5bbd3;grid-column:1;grid-row:1}
-    .pallet-measure strong{font-size:37px;color:#eaf4ff;letter-spacing:-1px;line-height:1.06;font-variant-numeric:tabular-nums;grid-column:2;grid-row:1 / 3}
+    .pallet-measure span{font-size:12px;font-weight:900;letter-spacing:1px;color:#c7d7e9;grid-column:1;grid-row:1}
+    .pallet-measure strong{font-size:42px;color:#eaf4ff;letter-spacing:-1px;line-height:1.02;font-variant-numeric:tabular-nums;grid-column:2;grid-row:1 / 3}
     .pallet-measure small{font-size:10px;color:#879db6;grid-column:1;grid-row:2}
     .pallet-measure.completed{border-top-color:#4de4ae}.pallet-measure.completed strong{color:#72edbf}
     .pallet-measure.pending{border-top-color:#f1b75b}.pallet-measure.pending strong{color:#f7c578}
-    .global-bottom{border:1px solid #37516c;background:linear-gradient(110deg,#163044,#111e34 72%);border-radius:17px;margin-top:11px;padding:12px 17px;display:grid;grid-template-columns:235px minmax(280px,1.3fr) 160px minmax(340px,1.25fr);gap:17px;align-items:center;min-width:0}
+    .global-bottom{border:1px solid #37516c;background:linear-gradient(110deg,#163044,#111e34 72%);border-radius:17px;margin-top:10px;padding:12px 14px;display:grid;grid-template-columns:240px minmax(330px,1.45fr) 180px minmax(430px,1.55fr);gap:14px;align-items:center;min-width:0}
     .global-identity{display:flex;flex-direction:column;gap:4px;border-right:1px solid #3b5470;padding-right:14px;min-width:0}
     .global-head{font-size:16px;color:#6ee4bc;font-weight:900;letter-spacing:1.05px;line-height:1.08}
     .global-identity strong{font-size:18px;letter-spacing:-.4px;white-space:nowrap}
     .global-identity small{font-size:10px;color:#9eb5ca;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .global-label,.global-percent>span,.global-pallets>span{display:block;color:#9fb8d1;font-size:13px;font-weight:900;letter-spacing:1.0px;line-height:1.08}
     .global-main{display:flex;align-items:baseline;gap:8px;margin:5px 0 7px;font-variant-numeric:tabular-nums;white-space:nowrap}
-    .global-main strong{font-size:31px;line-height:1;font-weight:900;letter-spacing:-1px}.global-main strong:first-child{color:#6eeac1}
+    .global-main strong{font-size:34px;line-height:1;font-weight:900;letter-spacing:-1px}.global-main strong:first-child{color:#6eeac1}
     .global-main span{font-size:19px;color:#7394af}.global-main small{font-size:12px;color:#8aa6c0;font-weight:750}
     .global-track{background:#33475d;border-radius:20px;height:8px;overflow:hidden}
     .global-track .progress-fill{background:#4de4ae}
     .global-percent{display:flex;flex-direction:column;align-items:flex-start;gap:2px;border-right:1px solid #3b5470;padding-right:13px}
-    .global-percent strong{font-size:38px;line-height:1.1;letter-spacing:-1.4px;color:#81eec5;font-variant-numeric:tabular-nums}
+    .global-percent strong{font-size:42px;line-height:1.05;letter-spacing:-1.4px;color:#81eec5;font-variant-numeric:tabular-nums}
     .global-percent small{font-size:10px;color:#98b3c9;white-space:nowrap}
     .global-pallets{min-width:0}.global-pallet-counters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:10px}
     .global-pallet-counters>div{min-width:0;display:flex;flex-direction:column;gap:4px}
@@ -261,7 +261,7 @@
 <script>document.documentElement.classList.add('tv-autofit');</script>
 <div class="shell" id="dashboard">
   <header class="top">
-    <div class="brand"><div class="mark">P</div><div><div class="eyebrow">PRODIESA · PLANTA 1</div><div class="brand-title">Control de Empaque</div><div class="brand-sub">Seguimiento de producción · Hora por hora</div></div></div>
+    <div class="brand"><div class="mark">P</div><div><div class="eyebrow">PRODIESA · PLANTA 1</div><div class="brand-title">Control de Empaque</div><div class="brand-sub">Vista rápida de producción</div></div></div>
     <div class="top-right">
       <div class="pill demo" id="connection"><span class="dot"></span><span id="connectionText">CONECTANDO</span></div>
       <div class="clock"><strong id="clock">--:--</strong><small id="todayLabel">--</small></div>
@@ -279,61 +279,61 @@
       <div class="hero-subline" id="heroSubline">Esperando datos del turno</div>
     </div>
     <div class="hero-summary">
-      <div class="hero-meta"><span class="hero-bullet"></span><span>PRODUCCIÓN DEL TURNO</span><span class="hero-date" id="shiftDate">—</span></div>
+      <div class="hero-meta"><span class="hero-bullet"></span><span>TURNO</span><span class="hero-date" id="shiftDate">—</span></div>
       <div class="hero-total-values"><strong id="heroProduced">—</strong><span class="hero-slash">/</span><strong id="heroPlan">—</strong><small>PIEZAS</small></div>
       <div class="hero-brief" id="heroBrief">Total de todos los modelos programados</div>
     </div>
     <div class="hero-overall">
-      <div class="hero-overall-label">AVANCE TOTAL DE LA LÍNEA</div>
+      <div class="hero-overall-label">AVANCE</div>
       <div class="hero-percent" id="heroPercent">—</div>
       <div class="progress-bg"><div class="progress-fill" id="heroFill" style="width:0%"></div></div>
       <div class="hero-overall-foot" id="heroFoot">Pendientes: — piezas</div>
     </div>
   </section>
   <section class="pallet-strip" aria-label="Pallets equivalentes por línea">
-    <div class="pallet-intro"><div class="pallet-title">PALLETS · <span id="palletLine">LÍNEA —</span></div><div class="pallet-description" id="modelCountSummary">Todos los SKU del turno</div><div class="pallet-note">Equivalentes según piezas por pallet de MINXPALLET</div></div>
-    <div class="pallet-measure"><span>PROGRAMADOS</span><strong id="palletPlanned">—</strong><small>equivalentes</small></div>
-    <div class="pallet-measure completed"><span>REALIZADOS</span><strong id="palletDone">—</strong><small>equivalentes</small></div>
-    <div class="pallet-measure pending"><span>PENDIENTES</span><strong id="palletPending">—</strong><small>equivalentes</small></div>
+    <div class="pallet-intro"><div class="pallet-title"><span class="icon-badge">📦</span>PALLETS · <span id="palletLine">LÍNEA —</span></div><div class="pallet-description" id="modelCountSummary">SKU del turno</div><div class="pallet-note">Equivalentes según piezas por pallet de MINXPALLET</div></div>
+    <div class="pallet-measure"><span><span class="icon-badge">🗂️</span>PLAN</span><strong id="palletPlanned">—</strong><small>eq.</small></div>
+    <div class="pallet-measure completed"><span><span class="icon-badge">✅</span>HECHOS</span><strong id="palletDone">—</strong><small>eq.</small></div>
+    <div class="pallet-measure pending"><span><span class="icon-badge">⏳</span>RESTAN</span><strong id="palletPending">—</strong><small>eq.</small></div>
   </section>
   <div class="kpis">
-    <section class="kpi actual"><div class="k-label">Producido en la línea</div><div class="k-val accent" id="produced">—</div><div class="k-foot">Todos los SKU del turno</div></section>
-    <section class="kpi"><div class="k-label">Programado en la línea</div><div class="k-val" id="linePlan">—</div><div class="k-foot">Incluye filas pendientes sin hora</div></section>
-    <section class="kpi adherence"><div class="k-label">Avance total de línea</div><div class="k-val" id="adherence">—</div><div class="k-foot" id="adherenceFoot">Real ÷ plan del turno</div></section>
-    <section class="kpi speed"><div class="k-label">Piezas por producir</div><div class="k-val" id="remaining">—</div><div class="k-foot" id="pendingFoot">Pendientes de todos los modelos</div></section>
+    <section class="kpi actual"><div class="k-label"><span class="icon-badge">🧩</span>Producido</div><div class="k-val accent" id="produced">—</div><div class="k-foot">SKU del turno</div></section>
+    <section class="kpi"><div class="k-label"><span class="icon-badge">📋</span>Plan</div><div class="k-val" id="linePlan">—</div><div class="k-foot">Con y sin hora</div></section>
+    <section class="kpi adherence"><div class="k-label"><span class="icon-badge">📈</span>Avance</div><div class="k-val" id="adherence">—</div><div class="k-foot" id="adherenceFoot">Real / plan</div></section>
+    <section class="kpi speed"><div class="k-label"><span class="icon-badge">⏱️</span>Restan</div><div class="k-val" id="remaining">—</div><div class="k-foot" id="pendingFoot">Pendiente del turno</div></section>
   </div>
   <main class="main">
     <section class="pane chart-pane">
-      <div class="panel-head"><div><h2>Producción de la línea · hora por hora</h2><p id="chartSubtitle">Total de la línea; cada color identifica el SKU producido</p></div><div class="switch"><button data-mode="record">Por registro</button><button class="active" data-mode="hour">Por hora</button></div></div>
-      <div class="legend"><span><i class="lp"></i> Planeado con hora</span><span><i class="lr"></i> Real por modelo</span><span class="chart-count" id="chartInfo">— intervalos</span></div>
+      <div class="panel-head"><div><h2><span class="icon-badge">📊</span>PRODUCCIÓN POR HORA</h2><p id="chartSubtitle">Total línea · color = SKU</p></div><div class="switch"><button data-mode="record">Por registro</button><button class="active" data-mode="hour">Por hora</button></div></div>
+      <div class="legend"><span><i class="lp"></i> Plan</span><span><i class="lr"></i> Real</span><span class="chart-count" id="chartInfo">— intervalos</span></div>
       <div class="chart" id="chart" role="img" aria-label="Producción por hora de todos los modelos de la línea"></div>
       <div class="sku-legend" id="skuLegend"></div>
-      <div class="below-chart"><div class="little"><div class="x">Modelos programados</div><div class="y" id="modelCount">—</div></div><div class="little"><div class="x">Modelos con producción</div><div class="y" id="startedCount">—</div></div><div class="little"><div class="x">Cumplimiento al corte *</div><div class="y" id="cutCompliance">—</div></div></div>
+      <div class="below-chart"><div class="little"><div class="x">SKU plan</div><div class="y" id="modelCount">—</div></div><div class="little"><div class="x">SKU real</div><div class="y" id="startedCount">—</div></div><div class="little"><div class="x">Corte *</div><div class="y" id="cutCompliance">—</div></div></div>
     </section>
     <aside class="side">
       <section class="models-card" aria-label="Avance individual por modelo">
-        <div class="models-header"><span class="side-title">DESGLOSE POR MODELO</span><span id="modelCounts">—</span></div>
-        <div class="models-caption">Cada SKU tiene su propio plan al 100%</div>
+        <div class="models-header"><span class="side-title"><span class="icon-badge">🧾</span>DESGLOSE POR MODELO</span><span id="modelCounts">—</span></div>
+        <div class="models-caption">Real / plan por SKU</div>
         <div class="model-list" id="modelList"><div class="empty">Consultando modelos…</div></div>
         <div class="model-pager" id="modelPager" hidden></div>
       </section>
       <section class="observations-card" aria-label="Última captura y comentarios">
-        <div class="capture-line"><span class="side-title">ÚLTIMA CAPTURA REGISTRADA</span><strong id="lastCapture">--:--</strong></div>
+        <div class="capture-line"><span class="side-title"><span class="icon-badge">🕒</span>ÚLTIMA CAPTURA</span><strong id="lastCapture">--:--</strong></div>
         <div class="capture-description" id="captureText">Consultando Google Sheets...</div>
         <div class="observations-divider"></div>
-        <span class="side-title">COMENTARIOS Y OBSERVACIONES</span>
+        <span class="side-title"><span class="icon-badge">📝</span>OBSERVACIONES</span>
         <div class="mini-notes" id="notesContent">Sin observaciones registradas</div>
         <div class="alert-strip" id="alertBox">—</div>
       </section>
     </aside>
   </main>
   <section class="global-bottom" aria-label="Global del turno de todas las líneas">
-    <div class="global-identity"><span class="global-head">GLOBAL DEL TURNO</span><strong>TODAS LAS LÍNEAS</strong><small id="globalLines">Líneas 1 a 4 · Esperando datos</small></div>
-    <div class="global-pieces"><span class="global-label">PIEZAS · REAL / PROGRAMADO</span><div class="global-main"><strong id="globalProduced">—</strong><span>/</span><strong id="globalPlanned">—</strong><small>pzas</small></div><div class="global-track"><div class="progress-fill" id="globalFill" style="width:0%"></div></div></div>
-    <div class="global-percent"><span>AVANCE GLOBAL</span><strong id="globalPercent">—</strong><small id="globalRemaining">— piezas pendientes</small></div>
-    <div class="global-pallets"><span>PALLETS EQUIVALENTES · GLOBAL</span><div class="global-pallet-counters"><div><strong id="globalPalletPlanned">—</strong><small>programados</small></div><div><strong id="globalPalletDone">—</strong><small>realizados</small></div><div><strong id="globalPalletPending">—</strong><small>pendientes</small></div></div></div>
+    <div class="global-identity"><span class="global-head"><span class="icon-badge">🌐</span>GLOBAL</span><strong>TODAS LAS LÍNEAS</strong><small id="globalLines">Líneas 1 a 4 · Esperando datos</small></div>
+    <div class="global-pieces"><span class="global-label"><span class="icon-badge">🧩</span>PIEZAS</span><div class="global-main"><strong id="globalProduced">—</strong><span>/</span><strong id="globalPlanned">—</strong><small>pzas</small></div><div class="global-track"><div class="progress-fill" id="globalFill" style="width:0%"></div></div></div>
+    <div class="global-percent"><span><span class="icon-badge">📈</span>AVANCE</span><strong id="globalPercent">—</strong><small id="globalRemaining">— piezas pendientes</small></div>
+    <div class="global-pallets"><span><span class="icon-badge">📦</span>PALLETS</span><div class="global-pallet-counters"><div><strong id="globalPalletPlanned">—</strong><small>plan</small></div><div><strong id="globalPalletDone">—</strong><small>hechos</small></div><div><strong id="globalPalletPending">—</strong><small>restan</small></div></div></div>
   </section>
-  <div class="footnote"><span id="sourceLabel">Fuente: PLAN EMPAQUE + MINXPALLET · Solo lectura</span><span id="refreshLabel">Actualización automática cada 5 min</span></div>
+  <div class="footnote"><span id="sourceLabel">Google Sheets · directo</span><span id="refreshLabel">Auto · 5 min</span></div>
 </div>
 <script>
 (() => {
@@ -461,11 +461,11 @@
  }
  function renderGlobal(){
    const g=dashboard?.global;
-   $('globalLines').textContent=g?`${g.scheduledLines} líneas programadas · ${g.activeLines} con captura · Líneas 1–4`:'Sin datos del día';
+   $('globalLines').textContent=g?`${g.scheduledLines} líneas prog. · ${g.activeLines} activas`:'Sin datos';
    $('globalProduced').textContent=g?num(g.produced):'—';
    $('globalPlanned').textContent=g?num(g.planTotal):'—';
    $('globalPercent').textContent=g?pct(g.progress):'—';
-   $('globalRemaining').textContent=g?`${num(g.remaining)} piezas pendientes`:'Sin plan global disponible';
+   $('globalRemaining').textContent=g?`${num(g.remaining)} pzas restantes`:'Sin global';
    $('globalFill').style.width=`${Math.max(0,Math.min(100,(g?.progress||0)*100))}%`;
    $('globalPalletPlanned').textContent=pallets(g?.palletPlan);
    $('globalPalletDone').textContent=pallets(g?.palletDone);
@@ -477,19 +477,19 @@
  function renderEmpty(){
    $('lineLabel').classList.add('empty-line');$('lineLabel').textContent='SIN LÍNEAS ACTIVAS';
    $('shiftDate').textContent=datestr(dashboard?.date).toUpperCase();
-   $('heroSubline').textContent='Esperando capturas de producción';$('heroSubline').classList.remove('single-model');
+   $('heroSubline').textContent='Esperando turno';$('heroSubline').classList.remove('single-model');
    $('heroProduced').textContent='—';$('heroPlan').textContent='—';$('heroPercent').textContent='—';
-   $('heroBrief').textContent='Sin producción registrada hoy';$('heroFoot').textContent='Pendientes: — piezas';$('heroFill').style.width='0%';
-   $('lastCapture').textContent='--:--';$('captureText').textContent=connectionError?'No se pudo consultar la hoja':'Esperando capturas en Google Sheets';
+   $('heroBrief').textContent='Sin producción hoy';$('heroFoot').textContent='Restan — pzas';$('heroFill').style.width='0%';
+   $('lastCapture').textContent='--:--';$('captureText').textContent=connectionError?'Sin acceso a la hoja':'Esperando capturas';
    ['produced','linePlan','adherence','remaining','modelCount','startedCount','cutCompliance','modelCounts','palletPlanned','palletDone','palletPending'].forEach(id=>$(id).textContent='—');
-   $('modelCountSummary').textContent='Sin registros de producción para hoy';$('palletLine').textContent='LÍNEA —';$('pendingFoot').textContent='Pendientes de todos los modelos';$('adherenceFoot').textContent='Real ÷ plan del turno';
-   $('chart').innerHTML='<div class="empty">En cuanto se capture producción en una línea, aparecerá el resultado del turno completo.</div>';$('chartInfo').textContent='Sin capturas';$('skuLegend').innerHTML='';$('modelList').innerHTML='<div class="empty">Sin modelos capturados hoy.</div>';
+   $('modelCountSummary').textContent='Sin producción hoy';$('palletLine').textContent='LÍNEA —';$('pendingFoot').textContent='Pendiente del turno';$('adherenceFoot').textContent='Real / plan';
+   $('chart').innerHTML='<div class="empty">Sin capturas para mostrar.</div>';$('chartInfo').textContent='Sin capturas';$('skuLegend').innerHTML='';$('modelList').innerHTML='<div class="empty">Sin SKU con producción.</div>';
    $('modelPager').hidden=true;document.querySelector('.models-card').classList.remove('single-sku');
-   $('notesContent').textContent='Sin observaciones registradas';$('alertBox').className='alert-strip warn';$('alertBox').textContent=connectionError?'Sin conexión a Google Sheets: '+connectionError:'No hay capturas de producción de hoy en las cuatro líneas.';
+   $('notesContent').textContent='Sin observaciones';$('alertBox').className='alert-strip warn';$('alertBox').textContent=connectionError?'Sin conexión: '+connectionError:'Sin capturas hoy';
    scheduleFit();
  }
  function render(){
-   $('sourceLabel').textContent=connectionError && dashboard?'ÚLTIMA CONSULTA FALLÓ · '+connectionError:'Lectura directa Google Sheets · Sin backend ni Apps Script';
+   $('sourceLabel').textContent=connectionError && dashboard?'Última lectura falló · '+connectionError:'Google Sheets · directo';
    if(lastRefresh)$('refreshLabel').textContent=`Consultado: ${new Date(lastRefresh).toLocaleTimeString('es-MX',{timeZone:zone,hour:'2-digit',minute:'2-digit',hour12:false})} · Próxima consulta en 5 min`;
    renderGlobal();
    if(!data){renderEmpty();return}
@@ -500,13 +500,13 @@
    $('heroProduced').textContent=num(data.produced);$('heroPlan').textContent=num(data.planTotal);
    $('heroPercent').textContent=pct(data.dayProgress);
    $('heroFill').style.width=`${Math.max(0,Math.min(100,(data.dayProgress||0)*100))}%`;
-   $('heroBrief').textContent=onlyOne?'Único modelo programado':`${data.startedCount} de ${data.models.length} modelos con producción`;
-   $('heroFoot').textContent=`Pendientes: ${num(data.remaining)} piezas del turno`;
-   $('lastCapture').textContent=data.latest?.time||'--:--';$('captureText').textContent=connectionError?'Datos anteriores · Sin conexión':'Última producción registrada';
+   $('heroBrief').textContent=onlyOne?'1 SKU en turno':`${data.startedCount}/${data.models.length} SKU con producción`;
+   $('heroFoot').textContent=`Restan ${num(data.remaining)} pzas`;
+   $('lastCapture').textContent=data.latest?.time||'--:--';$('captureText').textContent=connectionError?'Datos anteriores':'Último registro';
    $('produced').textContent=num(data.produced);$('linePlan').textContent=num(data.planTotal);$('adherence').textContent=pct(data.dayProgress);$('remaining').textContent=num(data.remaining);
    $('adherence').className='k-val '+(data.dayProgress==null?'':data.dayProgress>=1?'accent':data.dayProgress>=.8?'warn':'');
-   $('adherenceFoot').textContent=`${data.startedCount} de ${data.models.length} modelos con producción`;
-   $('modelCountSummary').textContent=`${data.models.length} modelos programados · ${data.startedCount} con producción`;
+   $('adherenceFoot').textContent=`${data.startedCount}/${data.models.length} SKU activos`;
+   $('modelCountSummary').textContent=`${data.models.length} SKU · ${data.startedCount} activos`;
    $('palletLine').textContent=data.line;
    $('palletPlanned').textContent=pallets(data.palletPlan);
    $('palletDone').textContent=pallets(data.palletDone);
@@ -516,10 +516,10 @@
    $('pendingFoot').textContent=`${num(data.remaining)} piezas pendientes del turno`;
    $('modelCount').textContent=String(data.models.length);$('startedCount').textContent=String(data.startedCount);$('cutCompliance').textContent=pct(data.timedCompliance);
    renderModels();
-   $('notesContent').innerHTML=data.comments.length?data.comments.slice(0,2).map(n=>`<div><strong>${esc(n.time)} · ${esc(n.model)}</strong> ${esc(n.text)}</div>`).join(''):'Sin observaciones en la columna W';
+   $('notesContent').innerHTML=data.comments.length?data.comments.slice(0,2).map(n=>`<div><strong>${esc(n.time)} · ${esc(n.model)}</strong> ${esc(n.text)}</div>`).join(''):'Sin observaciones';
    const warn=data.missingSlots>0;
    $('alertBox').className='alert-strip '+(warn?'warn':'ok');
-   $('alertBox').textContent=warn?`${data.missingSlots} captura(s) con hora vencida sin piezas registradas · Revisar en Sheets`:'* El corte horario solo incluye filas que tienen una hora asignada; el plan total incluye también filas sin hora.';
+   $('alertBox').textContent=warn?`${data.missingSlots} captura(s) sin piezas`:'* Corte = filas con hora';
    renderChart();scheduleFit();
  }
  // Google Visualization API responde mediante una función global llamada desde un script.
@@ -676,9 +676,9 @@ function buildProductionDashboard(planRows,standardRows,now=new Date()){
    }catch(e){
      connectionError=e.message||'Error de lectura';
      setConnection('error','SIN ACCESO A SHEETS');
-     $('refreshLabel').textContent='ERROR DE LECTURA · Reintento automático cada 5 min';
-     $('captureText').textContent=dashboard ? 'DATOS ANTERIORES · SIN CONEXIÓN' : connectionError;
-     if(dashboard){$('alertBox').className='alert';$('alertBox').textContent='⚠ Falló la actualización: '+connectionError+'. La pantalla muestra los últimos datos válidos, no información nueva.';$('sourceLabel').textContent='SIN CONEXIÓN · Datos de la última consulta correcta';}
+     $('refreshLabel').textContent='Error · Reintento 5 min';
+     $('captureText').textContent=dashboard ? 'Datos anteriores' : connectionError;
+     if(dashboard){$('alertBox').className='alert';$('alertBox').textContent='⚠ Falló la actualización';$('sourceLabel').textContent='Sin conexión · Últimos datos válidos';}
      if(!dashboard){useDashboard({date:new Date().toISOString().slice(0,10),activeLines:[],snapshots:{}});$('captureText').textContent=connectionError;}
      console.error('PRODIESA — Lectura directa de Google Sheets:',e);
    }finally{busy=false;$('refreshButton').disabled=false;}
